@@ -51,7 +51,7 @@ export class Planning {
             this.cellSelected.innerHTML = "RDV" + this.rdvNumber;
             this.rdvNumber++;
 
-            for (let index = smallestLine; index < biggestLine; index++) {
+            for (let index = smallestLine; index < biggestLine + 1; index++) {
                 
                 let actualCell = document.getElementById(`line${index}_cell_${firstCellArraySplit[1]}`);                
                 actualCell.className = this.STATE.OCCUPED;

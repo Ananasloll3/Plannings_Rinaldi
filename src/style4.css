@@ -103,7 +103,6 @@ body {
     font-weight: 700;
     border-bottom: 2px solid var(--discord-accent);
     position: sticky;  
-    top: 0;
     z-index: 100;
 }
 
@@ -117,7 +116,7 @@ body {
     background: var(--discord-bg-hover);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 101;
 }
 
 #planning thead th {
