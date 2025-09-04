@@ -1,0 +1,111 @@
+:root {
+    --random-bg-1: #3a0ca3;
+    --random-bg-2: #7209b7;
+    --random-bg-3: #f72585;
+    --random-bg-4: #4361ee;
+    --random-bg-5: #4cc9f0;
+
+    --text-light: #ffffff;
+    --text-dark: #1a1a1a;
+
+    --shadow-random: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --border-radius: 12px;
+    --transition: all 0.25s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--random-bg-1), var(--random-bg-2));
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Menu */
+.menu {
+    background: var(--random-bg-3);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-random);
+}
+
+.menu h1 {
+    color: var(--text-light);
+}
+
+.btn-menu {
+    background: var(--random-bg-4);
+    color: var(--text-light);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-menu:hover {
+    background: var(--random-bg-5);
+    color: var(--text-dark);
+}
+
+/* Planning */
+#div_planning {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background: var(--random-bg-2);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-random);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-light);
+}
+
+.planning-header {
+    background: var(--random-bg-1);
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#planning {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--random-bg-4);
+}
+
+#planning th, 
+#planning td {
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: var(--text-light);
+}
+
+.tr_line:hover {
+    background: var(--random-bg-5);
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+/* States */
+.occupied {
+    background: #ff595e;
+    color: var(--text-light);
+}
+.available {
+    background: #8ac926;
+    color: var(--text-dark);
+}
+.pending {
+    background: #ffca3a;
+    color: var(--text-dark);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--random-bg-3);
+    color: var(--text-light);
+    margin-top: 2rem;
+}

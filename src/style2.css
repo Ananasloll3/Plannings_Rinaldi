@@ -1,13 +1,11 @@
-/* ===== BOOST ROYAL CSS - PLANNING COMPLET ===== */
-
 :root {
-    --royal-purple: #6f42c1;
-    --royal-gold: #ffd700;
-    --royal-deep: #4a148c;
-    --royal-light: #e1bee7;
-    --royal-gradient: linear-gradient(135deg, #6f42c1 0%, #4a148c 100%);
-    --gold-gradient: linear-gradient(135deg, #ffd700 0%, #ff8f00 100%);
-    --shadow-royal: 0 8px 32px rgba(111, 66, 193, 0.3);
+    --royal-purple: #90bd3e;
+    --royal-gold: #0028ff;
+    --royal-deep: #b5eb73;
+    --royal-light: #1e4118;
+    --royal-gradient: linear-gradient(135deg, #90bd3e 0%, #b5eb73 100%);
+    --gold-gradient: linear-gradient(135deg, #0028ff 0%, #0070ff 100%);
+    --shadow-royal: 0 8px 32px rgba(144, 189, 62, 0.3);
     --border-radius: 12px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -20,13 +18,12 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #f8f9ff 0%, #e8eaf6 100%);
-    color: #2c3e50;
+    background: linear-gradient(135deg, #070600 0%, #171509 100%);
+    color: #d3c1af;
     line-height: 1.6;
     min-height: 100vh;
 }
 
-/* ===== MENU ROYAL ===== */
 .menu {
     background: var(--royal-gradient);
     padding: 1rem 2rem;
@@ -81,25 +78,25 @@ body {
     transform: translateY(-2px);
 }
 
-/* ===== CONTAINER PLANNING ===== */
 #div_planning {
     max-width: 1400px;
     margin: 2rem auto;
-    padding: 0 1rem;
     background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-royal);
     overflow: hidden;
     border: 1px solid var(--royal-light);
+    max-height: 80vh;  
+    overflow-y: auto;
 }
 
-/* ===== PLANNING HEADER ===== */
 .planning-header {
     background: var(--royal-gradient);
     color: white;
     padding: 1.5rem;
     text-align: center;
-    position: relative;
+    position: sticky;  
+    z-index: 100;
 }
 
 .planning-header h2 {
@@ -118,7 +115,6 @@ body {
     background: var(--gold-gradient);
 }
 
-/* ===== TABLE PLANNING ===== */
 #planning {
     width: 100%;
     border-collapse: collapse;
@@ -130,7 +126,7 @@ body {
     background: var(--royal-gradient);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 }
 
 #planning thead th {
@@ -153,18 +149,17 @@ body {
     width: calc((100% - 80px) / 7);
 }
 
-
 .tr_line {
     transition: var(--transition);
     border-bottom: 1px solid #f0f0f0;
 }
 
 .tr_line:hover {
-    background: linear-gradient(90deg, rgba(111, 66, 193, 0.05), transparent);
+    background: linear-gradient(90deg, rgba(144, 189, 62, 0.05), transparent);
 }
 
 .tr_line:nth-child(even) {
-    background: rgba(248, 249, 255, 0.3);
+    background: rgba(7, 6, 0, 0.1);
 }
 
 .tr_line td {
@@ -190,28 +185,26 @@ body {
 }
 
 .tr_line td:not(:first-child):hover {
-    background: rgba(255, 215, 0, 0.1);
+    background: rgba(0, 40, 255, 0.1);
     transform: scale(1.02);
-    box-shadow: inset 0 0 10px rgba(111, 66, 193, 0.2);
+    box-shadow: inset 0 0 10px rgba(144, 189, 62, 0.2);
 }
 
-
-.tr_line td.occupied {
-    background: linear-gradient(135deg, #e91e63, #ad1457);
+.occupied {
+    background: linear-gradient(135deg, #16e19c, #52eba8);
     color: white;
     font-weight: 600;
 }
 
-.tr_line td.available {
-    background: linear-gradient(135deg, #4caf50, #2e7d32);
+.available {
+    background: linear-gradient(135deg, #b350af, #d182cd);
     color: white;
 }
 
-.tr_line td.pending {
-    background: linear-gradient(135deg, #ff9800, #f57c00);
+.pending {
+    background: linear-gradient(135deg, #0067ff, #0383ff);
     color: white;
 }
-
 
 footer {
     text-align: center;
@@ -232,7 +225,6 @@ footer::before {
     background: var(--gold-gradient);
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     #div_planning {
         margin: 1rem;
@@ -266,7 +258,6 @@ footer::before {
         font-size: 0.75rem;
     }
 }
-
 
 @keyframes royal-pulse {
     0%, 100% { opacity: 1; }

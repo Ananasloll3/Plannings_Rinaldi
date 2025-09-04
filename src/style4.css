@@ -1,0 +1,223 @@
+:root {
+    /* Palette Discord Dark */
+    --discord-bg: #2b2d31;
+    --discord-bg-light: #313338;
+    --discord-bg-hover: #383a40;
+    --discord-border: #202225;
+
+    --discord-text: #f2f3f5;
+    --discord-muted: #b9bbbe;
+
+    --discord-accent: #5865f2;
+    --discord-accent-hover: #4752c4;
+    --discord-gold: #f0b132;
+
+    --success: #3ba55d;
+    --warning: #faa81a;
+    --error: #ed4245;
+
+    --shadow-discord: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --border-radius: 12px;
+    --transition: all 0.25s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--discord-bg);
+    color: var(--discord-text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ---------------- MENU ---------------- */
+
+.menu {
+    background: var(--discord-bg-light);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-discord);
+    border-bottom: 1px solid var(--discord-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.menu-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu h1 {
+    color: var(--discord-text);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.menu-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-menu {
+    background: var(--discord-accent);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.btn-menu:hover {
+    background: var(--discord-accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ---------------- PLANNING ---------------- */
+
+#div_planning {
+    max-width: 1400px;
+    margin: 2rem auto;
+    background: var(--discord-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-discord);
+    overflow: hidden;
+    border: 1px solid var(--discord-border);
+    max-height: 80vh;  
+    overflow-y: auto;
+}
+
+.planning-header {
+    background: var(--discord-bg-hover);
+    color: var(--discord-text);
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--discord-accent);
+    position: sticky;  
+    top: 0;
+    z-index: 100;
+}
+
+#planning {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#planning thead {
+    background: var(--discord-bg-hover);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#planning thead th {
+    padding: 0.8rem;
+    color: var(--discord-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-right: 1px solid var(--discord-border);
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+#planning thead th:first-child {
+    background: var(--discord-bg);
+    color: var(--discord-text);
+}
+
+.tr_line {
+    transition: var(--transition);
+    border-bottom: 1px solid var(--discord-border);
+}
+
+.tr_line:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.tr_line:hover {
+    background: var(--discord-bg-hover);
+}
+
+.tr_line td {
+    padding: 0.7rem;
+    border-right: 1px solid var(--discord-border);
+    text-align: center;
+    color: var(--discord-text);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tr_line td:first-child {
+    background: var(--discord-bg-hover);
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+}
+
+.tr_line td:not(:first-child):hover {
+    background: rgba(88, 101, 242, 0.15);
+}
+
+/* ---------------- STATES ---------------- */
+
+.occupied {
+    background: var(--error);
+    color: white;
+    font-weight: 600;
+}
+
+.available {
+    background: var(--success);
+    color: white;
+    font-weight: 600;
+}
+
+.pending {
+    background: var(--warning);
+    color: black;
+    font-weight: 600;
+}
+
+/* ---------------- FOOTER ---------------- */
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--discord-bg-light);
+    color: var(--discord-muted);
+    margin-top: 2rem;
+    border-top: 2px solid var(--discord-accent);
+}
+
+/* ---------------- SCROLLBAR ---------------- */
+
+#div_planning::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+#div_planning::-webkit-scrollbar-track {
+    background: var(--discord-bg);
+    border-radius: 4px;
+}
+
+#div_planning::-webkit-scrollbar-thumb {
+    background: var(--discord-accent);
+    border-radius: 4px;
+}
+
+#div_planning::-webkit-scrollbar-thumb:hover {
+    background: var(--discord-accent-hover);
+}

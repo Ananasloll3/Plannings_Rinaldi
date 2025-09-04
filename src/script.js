@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let colonne = 0; colonne < day_week + 1; colonne++) { // +1 pour la colonne heure
             let td = document.createElement("td");
-            
+            td.id = "line" + index + "_cell_" + colonne;
+
             // Première colonne = heure
             if (colonne === 0) {
                 td.textContent = String(index).padStart(2, '0') + ":00";
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     the_planning.selectCell(this);
                 });
             }
-
+            
             tr.appendChild(td);
         }
 
