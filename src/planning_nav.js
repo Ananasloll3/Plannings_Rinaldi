@@ -1,14 +1,17 @@
-// Génération de la navigation entre semaines
 const dateRangeEl = document.getElementById("date-range");
 const dayHeaders = Array.from(document.querySelectorAll("#planning thead th[id^='day-']"));
 
-let currentDate = new Date();
+const prevBtn = document.getElementById("prevWeek");
+const nextBtn = document.getElementById("nextWeek");
 
-// Trouver le lundi de la semaine actuelle
+let today = new Date();
+let currentMonday = getMonday(today); // lundi de la semaine actuelle
+let shownMonday = new Date(currentMonday); // lundi affiché
+
 function getMonday(d) {
     d = new Date(d);
     let day = d.getDay();
-    let diff = d.getDate() - day + (day === 0 ? -6 : 1); // si dimanche -> recule à lundi précédent
+    let diff = d.getDate() - day + (day === 0 ? -6 : 1);
     return new Date(d.setDate(diff));
 }
 
@@ -16,7 +19,7 @@ function updatePlanning(weekStart) {
     const daysOfWeek = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
     let current = new Date(weekStart);
 
-    // Remplir les en-têtes du tableau
+    // Colonnes avec dates
     dayHeaders.forEach((th, i) => {
         const day = new Date(current);
         day.setDate(weekStart.getDate() + i);
@@ -25,25 +28,32 @@ function updatePlanning(weekStart) {
         th.textContent = `${daysOfWeek[i]} ${day.toLocaleDateString("fr-FR", options)}`;
     });
 
-    // Afficher la plage de dates
+    // Période affichée
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
 
     const optionsRange = { day: "numeric", month: "long", year: "numeric" };
     dateRangeEl.textContent = `${weekStart.toLocaleDateString("fr-FR", optionsRange)} - ${weekEnd.toLocaleDateString("fr-FR", optionsRange)}`;
+
+    // Désactiver le bouton "←" si on est déjà à la semaine actuelle
+    prevBtn.disabled = weekStart <= currentMonday;
 }
 
-// Initialisation
-let weekStart = getMonday(currentDate);
-updatePlanning(weekStart);
+// Init
+updatePlanning(shownMonday);
 
-// Navigation entre semaines
-document.getElementById("prevWeek").addEventListener("click", () => {
-    weekStart.setDate(weekStart.getDate() - 7);
-    updatePlanning(weekStart);
+// Navigation
+prevBtn.addEventListener("click", () => {
+    let newMonday = new Date(shownMonday);
+    newMonday.setDate(newMonday.getDate() - 7);
+
+    if (newMonday >= currentMonday) {
+        shownMonday = newMonday;
+        updatePlanning(shownMonday);
+    }
 });
 
-document.getElementById("nextWeek").addEventListener("click", () => {
-    weekStart.setDate(weekStart.getDate() + 7);
-    updatePlanning(weekStart);
+nextBtn.addEventListener("click", () => {
+    shownMonday.setDate(shownMonday.getDate() + 7);
+    updatePlanning(shownMonday);
 });
