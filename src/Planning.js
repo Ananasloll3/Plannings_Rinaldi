@@ -1,11 +1,8 @@
 export class Plannings {
-    constructor(parameters) {
+    constructor(_popup_new_rd) {
         
         this.list_rdv = [];
-        this.firstCellSelected = null;
-
-        // Adding new rdv
-        this.firstCellSelected = null;
+        this.popup_new_rdv = _popup_new_rd;
     }
 
 
@@ -27,7 +24,7 @@ export class Plannings {
         }
     }
 
-
+    /*
     addRdv (td) {
         
         if (this.firstCellSelected === null) {
@@ -48,6 +45,11 @@ export class Plannings {
             this.firstCellSelected = null;
             this.update();
         }
+    }*/
+
+    newRdv (cell) {
+        this.popup_new_rdv.classList.remove("hidden");
+        this.popup_new_rdv.classList.add('show');
     }
         
 }

@@ -1,10 +1,16 @@
 import { Plannings } from "./Planning.js";
 
-let planning = new Plannings();
 let table_planning = document.getElementById("planning");
 let clear_planning = document.getElementById("clear_planning");
 let save_planning = document.getElementById("save_planning");
 
+let popup_rdv = document.getElementById("popup-rdv");
+
+let cancelBtnModal = document.getElementById('popup-close-id');
+//let formModal = document.getElementById('rdvForm');
+
+let planning = new Plannings(popup_rdv);
+ 
 let max_hours = 24;
 let day_week = 7;
 
@@ -26,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 // Cellules cliquables pour les jours
                 td.addEventListener('click', function() {
-                    planning.addRdv(this);
+                    planning.newRdv(this);
                 });
             }
             
@@ -44,3 +50,9 @@ clear_planning.addEventListener("click", async () => {
 
 save_planning.addEventListener("click", async () => {
 })
+
+
+cancelBtnModal.addEventListener("click", () => {
+    popup_rdv.classList.remove('show');
+    popup_rdv.classList.add("hidden");
+});

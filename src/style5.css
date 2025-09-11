@@ -1,4 +1,5 @@
 :root {
+    /* Palette Random */
     --random-bg-1: #3a0ca3;
     --random-bg-2: #7209b7;
     --random-bg-3: #f72585;
@@ -10,102 +11,234 @@
 
     --shadow-random: 0 8px 24px rgba(0, 0, 0, 0.5);
     --border-radius: 12px;
-    --transition: all 0.25s ease;
+    --transition: all 0.3s ease;
+}
+
+/* ---------------- RESET ---------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, var(--random-bg-1), var(--random-bg-2));
     color: var(--text-light);
     line-height: 1.6;
     min-height: 100vh;
 }
 
-/* Menu */
+/* ---------------- MENU ---------------- */
 .menu {
     background: var(--random-bg-3);
     padding: 1rem 2rem;
     box-shadow: var(--shadow-random);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.menu-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .menu h1 {
     color: var(--text-light);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.menu-buttons {
+    display: flex;
+    gap: 0.75rem;
 }
 
 .btn-menu {
     background: var(--random-bg-4);
     color: var(--text-light);
-    padding: 0.5rem 1rem;
     border: none;
+    padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
+    font-weight: 500;
 }
 
 .btn-menu:hover {
     background: var(--random-bg-5);
     color: var(--text-dark);
+    transform: translateY(-2px);
 }
 
-/* Planning */
+/* ---------------- PLANNING ---------------- */
 #div_planning {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 2rem auto;
     background: var(--random-bg-2);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-random);
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-light);
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .planning-header {
     background: var(--random-bg-1);
-    padding: 1rem;
+    padding: 1.2rem;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
+    color: var(--text-light);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 3px solid var(--random-bg-5);
 }
 
 #planning {
     width: 100%;
     border-collapse: collapse;
+    font-size: 0.9rem;
     background: var(--random-bg-4);
 }
 
-#planning th, 
-#planning td {
-    padding: 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
+#planning thead {
+    background: var(--random-bg-1);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+#planning thead th {
+    padding: 0.9rem;
     color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.tr_line {
+    transition: var(--transition);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.tr_line:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .tr_line:hover {
     background: var(--random-bg-5);
     color: var(--text-dark);
+}
+
+.tr_line td {
+    padding: 0.8rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+    cursor: pointer;
     transition: var(--transition);
 }
 
-/* States */
+.tr_line td:first-child {
+    background: var(--random-bg-3);
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+}
+
+/* ---------------- STATES ---------------- */
 .occupied {
     background: #ff595e;
     color: var(--text-light);
+    font-weight: 600;
 }
+
 .available {
     background: #8ac926;
     color: var(--text-dark);
+    font-weight: 600;
 }
+
 .pending {
     background: #ffca3a;
     color: var(--text-dark);
+    font-weight: 600;
 }
 
-/* Footer */
+/* ---------------- FOOTER ---------------- */
 footer {
     text-align: center;
     padding: 1.5rem;
     background: var(--random-bg-3);
     color: var(--text-light);
     margin-top: 2rem;
+    border-top: 3px solid var(--random-bg-5);
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 768px) {
+    #div_planning {
+        margin: 1rem;
+        border-radius: 8px;
+    }
+
+    .menu {
+        padding: 1rem;
+    }
+
+    .menu h1 {
+        font-size: 1.2rem;
+    }
+
+    .menu-buttons {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    #planning {
+        font-size: 0.8rem;
+    }
+
+    #planning th,
+    #planning td {
+        padding: 0.6rem;
+    }
+}
+
+/* ---------------- ANIMATIONS ---------------- */
+@keyframes random-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.pulse {
+    animation: random-pulse 1.5s infinite;
+}
+
+/* ---------------- SCROLLBAR ---------------- */
+#div_planning::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+#div_planning::-webkit-scrollbar-track {
+    background: var(--random-bg-2);
+    border-radius: 4px;
+}
+
+#div_planning::-webkit-scrollbar-thumb {
+    background: var(--random-bg-5);
+    border-radius: 4px;
+}
+
+#div_planning::-webkit-scrollbar-thumb:hover {
+    background: var(--random-bg-4);
 }

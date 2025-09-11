@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planning</title>
     <link id="theme-css" rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pop_up.css">
 </head>
-
 <body>
+
     <div class="menu">
         <div class="menu-content">
             <h1> Planning </h1>
             <div class="menu-buttons">
                 <button class="btn-menu" id="clear_planning">Effacer</button>
                 <button class="btn-menu" id="save_planning">Sauvegarder</button>
-                
+
                 <select id="choix-style">
                     <option disabled>Choisir un style</option>
                     <option value="style.css">Style 1</option>
@@ -34,10 +35,17 @@
                 <button class="btn-menu" id="prevWeek">←</button>
                 <h2 id="planning-title">Planning Hebdomadaire</h2>
                 <button class="btn-menu" id="nextWeek">→</button>
+
+                <!-- 🟡 Entoure le bouton + calendrier dans un conteneur -->
+                <div class="calendar-wrapper">
+                    <button class="btn-menu" id="openCalendar">📅</button>
+                    <!-- Calendrier positionné juste à côté du bouton -->
+                    <div id="calendar" class="calendar hidden"></div>
+                </div>
             </div>
             <p id="date-range"></p>
         </div>
-        
+
         <table id="planning">
             <thead>
                 <tr>
@@ -52,17 +60,40 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Généré par le JavaScript -->
+                <!-- Généré par le JS -->
             </tbody>
         </table>
     </div>
+
+    <!-- POPUP RDV -->
+    <div id="popup-rdv" class="popup hidden">
+        <div class="popup-content">
+        <span id="popup-close-id" class="popup-close">&times;</span>
+        <h2>Prendre un rendez-vous</h2>
+        <form id="form-rdv">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+    
+            <label for="date">Date :</label>
+            <input type="date" id="date" name="date" required>
+    
+            <label for="heure">Heure :</label>
+            <input type="time" id="heure" name="heure" required>
+    
+            <button type="submit" class="btn-menu">Valider</button>
+        </form>
+        </div>
+    </div>
+
 
     <footer>
         <p>👑 By Maxime & Stéphane - Planning</p>
     </footer>
 
+    <!-- JavaScript -->
     <script type="module" src="script.js"></script>
     <script src="style_switch.js"></script>
     <script src="planning_nav.js"></script>
+    <script src="calendar.js"></script>
 </body>
 </html>
