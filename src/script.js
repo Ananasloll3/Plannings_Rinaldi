@@ -1,13 +1,12 @@
-import { Planning } from "./Planning.js";
+import { Plannings } from "./Planning.js";
 
+let planning = new Plannings();
 let table_planning = document.getElementById("planning");
 let clear_planning = document.getElementById("clear_planning");
 let save_planning = document.getElementById("save_planning");
 
 let max_hours = 24;
 let day_week = 7;
-
-let the_planning = new Planning(table_planning);
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -27,23 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 // Cellules cliquables pour les jours
                 td.addEventListener('click', function() {
-                    the_planning.selectCell(this);
+                    planning.addRdv(this);
                 });
             }
             
             tr.appendChild(td);
         }
+        table_planning.appendChild(tr);
 
-        table_planning.children[1].appendChild(tr);
     }
 });
 
 
 clear_planning.addEventListener("click", async () => {
-    the_planning.clearPlanning();
 })
 
 
 save_planning.addEventListener("click", async () => {
-    the_planning.clearPlanning();
 })

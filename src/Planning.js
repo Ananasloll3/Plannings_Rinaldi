@@ -1,77 +1,72 @@
+export class Plannings {
+    constructor(parameters) {
+        
+        this.list_rdv = [];
+        this.firstCellSelected = null;
 
-export class Planning {
-    constructor(table) {
-        this.table = table;
-        this.firstCellSelected = false;
-        this.cellSelected = null;
-        this.rdvNumber = 0;
-
-        this.STATE = {
-            "FREE": 0,
-            "OCCUPED": "occupied",
-            "INCOMING": 2
-        }
-
+        // Adding new rdv
+        this.firstCellSelected = null;
     }
 
-    selectCell(cell){
 
-        if (!this.firstCellSelected) {
-            this.cellSelected = cell;
-            this.firstCellSelected = true;
-            console.log("First cell selected : " + cell.id);
+    update () {
+        for (let rdv of this.list_rdv) {
+            console.log(rdv);
+            
+            let nombreCellules = (rdv.idJjourFin - rdv.idJourDebut + 1) * (rdv.heureFin - rdv.heureDebut);
+
+            for (let index = 0; index < nombreCellules; index++) {
+                let cell = document.getElementById("line" + (rdv.heureDebut + Math.floor(index / (rdv.idJjourFin - rdv.idJourDebut + 1))) + "_cell_" + (rdv.idJourDebut + 1 + (index % (rdv.idJjourFin - rdv.idJourDebut + 1))));
+                
+                cell.classList.add("occupied");
+                if (index === 0) {
+                    cell.textContent = rdv.titre;
+                }
+            }
             
         }
+    }
+
+
+    addRdv (td) {
+        
+        if (this.firstCellSelected === null) {
+            this.firstCellSelected = td;
+            td.classList.add("pending");
+        }
+
         else {
-            console.log("Seconde cell selected : " + cell.id);
-            let firstCellId = this.cellSelected.id;
-            let secondeCellId = cell.id;
-
-            if (firstCellId === secondeCellId) {
-                cell.className = this.STATE.OCCUPED;
-            }
-
-            let firstCellArraySplit = firstCellId.split("_cell_");
-            let secondeCellArraySplit = secondeCellId.split("_cell_");
-
-            if (firstCellArraySplit[1] !== secondeCellArraySplit[1]) {
-                console.log("N'est pas le meme jour");
-                alert("Veuillez mettre le rdv sur le meme jour")
-                this.cellSelected = null;
-                this.firstCellSelected = false;
-                return;
-            }
-
-            let firstCellLine = firstCellArraySplit[0].split("line")[1];
-            let secondeCellLine = secondeCellArraySplit[0].split("line")[1];
+            this.firstCellSelected.classList.remove("pending");
             
+            let startHour = Math.min(parseInt(this.firstCellSelected.parentElement.id.split("_")[1]), parseInt(td.parentElement.id.split("_")[1]));
+            let endHour = Math.max(parseInt(this.firstCellSelected.parentElement.id.split("_")[1]), parseInt(td.parentElement.id.split("_")[1]));
+            let startDay = Math.min(this.firstCellSelected.cellIndex - 1, td.cellIndex - 1);
+            let endDay = Math.max(this.firstCellSelected.cellIndex - 1, td.cellIndex - 1);
             
-            let smallestLine = Math.min(parseInt(firstCellLine), parseInt(secondeCellLine));
-            let biggestLine = Math.max(parseInt(firstCellLine), parseInt(secondeCellLine));
-            this.cellSelected.innerHTML = "RDV" + this.rdvNumber;
-            this.rdvNumber++;
-
-            for (let index = smallestLine; index < biggestLine + 1; index++) {
-                
-                let actualCell = document.getElementById(`line${index}_cell_${firstCellArraySplit[1]}`);                
-                actualCell.className = this.STATE.OCCUPED;
-                
-            }
-            
-            this.cellSelected = null;
-            this.firstCellSelected = false;
+            let titreRDV = prompt("Titre du RDV :", "RDV");
+            this.list_rdv.push(new RDV(titreRDV, startDay, startHour, endDay, endHour));
+            this.firstCellSelected = null;
+            this.update();
         }
     }
-
-    clearPlanning(){
-        const cells = document.querySelectorAll('.tr_line td:not(:first-child)');
-        cells.forEach(cell => {
-            cell.className = '';
-            cell.textContent = '';
-        });
-    }
-
-    savePlanning(){
-
-    }
+        
 }
+
+
+export class RDV {
+    static lastRdvId = 0;
+
+    constructor(titre = `RDV${RDV.lastRdvId}`, jourDebut, heureDebut, jourFin, heureFin) {
+        this.id = RDV.lastRdvId;
+        RDV.lastRdvId++;
+
+        this.titre = titre;
+        this.idJourDebut = jourDebut;
+        this.idJjourFin = jourFin;
+
+        this.heureDebut = heureDebut;
+        this.heureFin = heureFin;
+    }
+
+}
+

@@ -1,115 +1,27 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Planning avec fusion et RDV</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    table { border-collapse: collapse; width: 100%; text-align: center; }
-    th, td { border: 1px solid #ddd; padding: 8px; }
-    th { background: #f4f4f4; }
-    td { cursor: pointer; transition: background 0.3s; position: relative; }
-    td.selected { background: #4CAF50; color: white; font-weight: bold; }
-    .rdv {
-      font-size: 12px;
-      font-weight: normal;
-      margin-top: 4px;
-      display: block;
-    }
-  </style>
-</head>
-<body>
-  <h2>Planning multi-jours avec fusion et RDV</h2>
-  <table id="planning">
-    <thead>
-      <tr>
-        <th>Heure</th>
-        <th>Lundi</th>
-        <th>Mardi</th>
-        <th>Mercredi</th>
-      </tr>
-    </thead>
-    <tbody id="planning-body"></tbody>
-  </table>
+<table id="myTable" border="1">
+  <tr>
+    <td id="cell1">A1</td>
+    <td id="cell2">A2</td>
+    <td id="cell3">A3</td>
+  </tr>
+  <tr>
+    <td>B1</td>
+    <td>B2</td>
+    <td>B3</td>
+  </tr>
+</table>
 
-  <script>
-    const jours = ["Lundi","Mardi","Mercredi"];
-    const heures = Array.from({length: 6}, (_, i) => i + 8); // 8h à 13h
-    const tbody = document.getElementById("planning-body");
+<button id="mergeBtn">Fusionner A1 et A2</button>
 
-    // Génération du tableau
-    heures.forEach(h => {
-      const row = document.createElement("tr");
-      const hourCell = document.createElement("td");
-      hourCell.textContent = h + "h";
-      row.appendChild(hourCell);
+<script>
+document.getElementById("mergeBtn").addEventListener("click", function() {
+  let cell1 = document.getElementById("cell1");
+  let cell2 = document.getElementById("cell2");
 
-      jours.forEach(jour => {
-        const cell = document.createElement("td");
-        cell.dataset.jour = jour;
-        cell.dataset.heure = h;
-        cell.addEventListener("click", () => {
-          if (!cell.classList.contains("selected")) {
-            // Première fois → demander un titre de RDV
-            const rdv = prompt("Entrez le titre du rendez-vous :", "RDV");
-            if (rdv) cell.dataset.rdv = rdv;
-          }
-          cell.classList.toggle("selected");
-          fusionner(jour);
-        });
-        row.appendChild(cell);
-      });
+  // Fusion horizontale : A1 + A2
+  cell1.colSpan = 2;
 
-      tbody.appendChild(row);
-    });
-
-    function fusionner(jour) {
-      // Réinitialiser toutes les cases fusionnées pour ce jour
-      const cells = [...document.querySelectorAll(`td[data-jour='${jour}']`)];
-      cells.forEach(c => {
-        c.style.display = "";
-        c.removeAttribute("rowspan");
-        c.innerHTML = ""; // effacer contenu précédent
-        if (c.classList.contains("selected")) {
-          c.classList.add("selected");
-        }
-      });
-
-      // Récupérer les heures sélectionnées
-      let selection = cells.filter(c => c.classList.contains("selected"))
-                           .map(c => parseInt(c.dataset.heure))
-                           .sort((a,b) => a-b);
-
-      if (selection.length === 0) return;
-
-      // Trouver blocs consécutifs
-      let blocs = [];
-      let debut = selection[0];
-      for (let i = 1; i <= selection.length; i++) {
-        if (selection[i] !== selection[i-1] + 1) {
-          blocs.push([debut, selection[i-1]]);
-          debut = selection[i];
-        }
-      }
-
-      // Fusionner dans le DOM
-      blocs.forEach(([start, end]) => {
-        const startCell = document.querySelector(`td[data-jour='${jour}'][data-heure='${start}']`);
-        const span = end - start + 1;
-        startCell.setAttribute("rowspan", span);
-
-        // Texte affiché en haut du bloc
-        const rdvText = startCell.dataset.rdv || "RDV";
-        startCell.innerHTML = `<strong>${start}h – ${end+1}h</strong><br><span class="rdv">${rdvText}</span>`;
-        startCell.classList.add("selected");
-
-        // Cacher les cases suivantes
-        for (let h = start+1; h <= end; h++) {
-          const hideCell = document.querySelector(`td[data-jour='${jour}'][data-heure='${h}']`);
-          hideCell.style.display = "none";
-        }
-      });
-    }
-  </script>
-</body>
-</html>
+  // Supprimer la cellule A2 (sinon elle reste affichée à côté)
+  cell2.remove();
+});
+</script>

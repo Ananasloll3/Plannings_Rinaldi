@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planning</title>
-    <link rel="stylesheet" href="style.css">
+    <link id="theme-css" rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -14,26 +14,41 @@
             <div class="menu-buttons">
                 <button class="btn-menu" id="clear_planning">Effacer</button>
                 <button class="btn-menu" id="save_planning">Sauvegarder</button>
+                
+                <select id="choix-style">
+                    <option disabled>Choisir un style</option>
+                    <option value="style.css">Style 1</option>
+                    <option value="style2.css">Style 2</option>
+                    <option value="style3.css">Style 3</option>
+                    <option value="style4.css">Style 4</option>
+                    <option value="style5.css">Style 5</option>
+                    <option value="style6.css">Style 6</option>
+                </select>
             </div>
         </div>
     </div>
 
     <div id="div_planning">
         <div class="planning-header">
-            <h2>Planning Hebdomadaire</h2>
+            <div class="planning-nav">
+                <button class="btn-menu" id="prevWeek">←</button>
+                <h2 id="planning-title">Planning Hebdomadaire</h2>
+                <button class="btn-menu" id="nextWeek">→</button>
+            </div>
+            <p id="date-range"></p>
         </div>
         
         <table id="planning">
             <thead>
                 <tr>
                     <th>Heure</th>
-                    <th>Lundi</th>
-                    <th>Mardi</th>
-                    <th>Mercredi</th>
-                    <th>Jeudi</th>
-                    <th>Vendredi</th>
-                    <th>Samedi</th>
-                    <th>Dimanche</th>
+                    <th id="day-1">Lundi</th>
+                    <th id="day-2">Mardi</th>
+                    <th id="day-3">Mercredi</th>
+                    <th id="day-4">Jeudi</th>
+                    <th id="day-5">Vendredi</th>
+                    <th id="day-6">Samedi</th>
+                    <th id="day-7">Dimanche</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,10 +58,11 @@
     </div>
 
     <footer>
-        <p>👑 By Maxime & Stéphane -  Planning </p>
+        <p>👑 By Maxime & Stéphane - Planning</p>
     </footer>
 
     <script type="module" src="script.js"></script>
     <script src="style_switch.js"></script>
+    <script src="planning_nav.js"></script>
 </body>
 </html>
