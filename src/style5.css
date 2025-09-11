@@ -11,234 +11,375 @@
 
     --shadow-random: 0 8px 24px rgba(0, 0, 0, 0.5);
     --border-radius: 12px;
-    --transition: all 0.3s ease;
+    --transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+    /* focus ring based on a light accent */
+    --focus-ring: rgba(76, 201, 240, 0.16);
 }
 
-/* ---------------- RESET ---------------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* ================= RESET / GLOBALS ================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, var(--random-bg-1), var(--random-bg-2));
+    background: linear-gradient(135deg, var(--random-bg-1) 0%, var(--random-bg-2) 100%);
     color: var(--text-light);
     line-height: 1.6;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* ---------------- MENU ---------------- */
+/* ================= MENU ================= */
 .menu {
-    background: var(--random-bg-3);
+    background: linear-gradient(90deg, var(--random-bg-3), rgba(255,255,255,0.04));
     padding: 1rem 2rem;
     box-shadow: var(--shadow-random);
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-radius: 0 0 calc(var(--border-radius) - 4px) calc(var(--border-radius) - 4px);
 }
-
+.menu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    pointer-events: none;
+    opacity: 0.08;
+}
 .menu-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
-
 .menu h1 {
     color: var(--text-light);
     font-size: 1.5rem;
     font-weight: 700;
 }
-
-.menu-buttons {
-    display: flex;
-    gap: 0.75rem;
-}
-
+.menu-buttons { display: flex; gap: 0.75rem; align-items:center; }
 .btn-menu {
-    background: var(--random-bg-4);
+    background: linear-gradient(90deg, var(--random-bg-4), var(--random-bg-5));
     color: var(--text-light);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
-    font-weight: 500;
+    font-weight: 600;
 }
-
 .btn-menu:hover {
-    background: var(--random-bg-5);
-    color: var(--text-dark);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    filter: brightness(1.03);
+}
+.btn-menu:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.25);
 }
 
-/* ---------------- PLANNING ---------------- */
+/* focus accessibility */
+.btn-menu:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 5px var(--focus-ring);
+    border-radius: 8px;
+}
+
+/* ================= PLANNING CONTAINER ================= */
 #div_planning {
     max-width: 1400px;
     margin: 2rem auto;
-    background: var(--random-bg-2);
+    background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(255,255,255,0.02)) , rgba(0,0,0,0.08);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-random);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.06);
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: visible; /* allow popovers and calendar to overflow */
+    position: relative;
+    z-index: 10;
+    -webkit-overflow-scrolling: touch;
 }
 
+/* planning header */
 .planning-header {
-    background: var(--random-bg-1);
-    padding: 1.2rem;
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: 700;
+    background: linear-gradient(90deg, var(--random-bg-1), var(--random-bg-3));
     color: var(--text-light);
+    padding: 1.25rem;
+    text-align: center;
     position: sticky;
     top: 0;
-    z-index: 10;
-    border-bottom: 3px solid var(--random-bg-5);
+    z-index: 110;
+    border-top-left-radius: calc(var(--border-radius) - 2px);
+    border-top-right-radius: calc(var(--border-radius) - 2px);
+}
+.planning-header h2 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 700;
 }
 
+/* thin accent bar */
+.planning-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--random-bg-4), var(--random-bg-5));
+}
+
+/* planning nav (controls) */
+.planning-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    position: relative;
+    z-index: 105;
+    flex-wrap: wrap;
+}
+#date-range {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* ================= TABLE / PLANNING ================= */
 #planning {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
-    background: var(--random-bg-4);
+    font-size: 0.95rem;
+    background: transparent;
+    table-layout: fixed; /* important pour colonnes égales */
 }
 
+/* thead sticky under planning-header */
 #planning thead {
-    background: var(--random-bg-1);
+    background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(255,255,255,0.02));
     position: sticky;
-    top: 0;
-    z-index: 20;
+    top: 0; /* sticky inside #div_planning, planning-header above it */
+    z-index: 100;
 }
-
 #planning thead th {
-    padding: 0.9rem;
+    padding: 0.9rem 0.6rem;
     color: var(--text-light);
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: 1px solid rgba(255,255,255,0.05);
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
 }
 
+/* first column label */
+#planning thead th:first-child {
+    width: 80px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
+}
+
+/* equal width for remaining columns */
+#planning thead th:not(:first-child) {
+    width: calc((100% - 80px) / 7);
+}
+
+/* rows */
 .tr_line {
     transition: var(--transition);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
 }
+.tr_line:nth-child(even) { background: rgba(255,255,255,0.02); }
+.tr_line:hover { background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); }
 
-.tr_line:nth-child(even) {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.tr_line:hover {
-    background: var(--random-bg-5);
-    color: var(--text-dark);
-}
-
+/* cells */
 .tr_line td {
-    padding: 0.8rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.75rem 0.5rem;
+    border-right: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
     text-align: center;
+    min-height: 44px;
     cursor: pointer;
     transition: var(--transition);
+    position: relative;
+    color: var(--text-light);
+    width: calc((100% - 80px) / 7);
 }
 
+/* sticky row label */
 .tr_line td:first-child {
-    background: var(--random-bg-3);
-    font-weight: 600;
+    background: linear-gradient(90deg, var(--random-bg-3), rgba(0,0,0,0.06));
+    color: var(--text-light);
+    font-weight: 700;
+    min-width: 80px;
     position: sticky;
     left: 0;
-    z-index: 5;
+    z-index: 115;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.25);
 }
 
-/* ---------------- STATES ---------------- */
+/* hover effect for content cells */
+.tr_line td:not(:first-child):hover {
+    background: linear-gradient(90deg, rgba(76,201,240,0.08), rgba(67,97,238,0.04));
+    transform: scale(1.02);
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.12);
+}
+
+/* ================= STATES ================= */
 .occupied {
-    background: #ff595e;
+    background: linear-gradient(90deg,#ff595e,#ff877a);
     color: var(--text-light);
-    font-weight: 600;
+    font-weight: 700;
 }
-
 .available {
-    background: #8ac926;
+    background: linear-gradient(90deg,#8ac926,#6cc24a);
     color: var(--text-dark);
-    font-weight: 600;
+    font-weight: 700;
 }
-
 .pending {
-    background: #ffca3a;
+    background: linear-gradient(90deg,#ffca3a,#ffb84d);
     color: var(--text-dark);
-    font-weight: 600;
+    font-weight: 700;
 }
 
-/* ---------------- FOOTER ---------------- */
+/* ================= FORM ELEMENTS ================= */
+label,
+select,
+option,
+input,
+textarea,
+button {
+    background: rgba(255,255,255,0.04);
+    color: var(--text-light);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    transition: var(--transition);
+    font-size: 0.95rem;
+    display: inline-block;
+    min-width: 80px;
+}
+input, textarea { width: 100%; box-sizing: border-box; }
+select:hover,
+option:hover,
+input:hover,
+textarea:hover,
+label:hover {
+    background: linear-gradient(90deg, var(--random-bg-4), var(--random-bg-5));
+    color: var(--text-dark);
+    transform: translateY(-2px);
+}
+select { appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+select option { background: rgba(0,0,0,0.12); color: var(--text-light); }
+
+/* disabled utility */
+[disabled], :disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ================= CALENDAR / POPPER ================= */
+.calendar-wrapper { position: relative !important; z-index: 1000 !important; }
+#calendar {
+    background: rgba(255,255,255,0.97);
+    color: var(--text-dark);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    width: 240px;
+    padding: 0.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.45rem;
+    z-index: 9999;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+#calendar.hidden { display: none; }
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+.calendar-header button {
+    background: linear-gradient(90deg, var(--random-bg-4), var(--random-bg-5));
+    border: none;
+    color: var(--text-light);
+    padding: 0.28rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+    text-align: center;
+    font-size: 0.78rem;
+}
+.calendar-days div {
+    padding: 0.35rem;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+.calendar-days div:hover {
+    background: linear-gradient(90deg, var(--random-bg-4), var(--random-bg-5));
+    color: var(--text-light);
+}
+.calendar-days .disabled { color: rgba(26,26,26,0.4); cursor: not-allowed; }
+.calendar-days .today {
+    background: linear-gradient(90deg, var(--random-bg-3), var(--random-bg-5));
+    color: var(--text-light);
+    font-weight: 700;
+}
+
+/* ================= FOOTER ================= */
 footer {
     text-align: center;
     padding: 1.5rem;
-    background: var(--random-bg-3);
+    background: linear-gradient(90deg, var(--random-bg-3), rgba(0,0,0,0.04));
     color: var(--text-light);
     margin-top: 2rem;
-    border-top: 3px solid var(--random-bg-5);
+    border-top: 3px solid rgba(255,255,255,0.02);
+    border-bottom-left-radius: calc(var(--border-radius) - 2px);
+    border-bottom-right-radius: calc(var(--border-radius) - 2px);
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+/* ================= SCROLLBAR ================= */
+#div_planning::-webkit-scrollbar { height: 8px; width: 8px; }
+#div_planning::-webkit-scrollbar-track { background: linear-gradient(90deg,var(--random-bg-2),rgba(0,0,0,0.02)); border-radius: 4px; }
+#div_planning::-webkit-scrollbar-thumb { background: linear-gradient(90deg,var(--random-bg-5),var(--random-bg-4)); border-radius: 4px; }
+#div_planning::-webkit-scrollbar-thumb:hover { filter: brightness(1.05); }
+
+/* ================= UTILITIES ================= */
+.hidden { display: none !important; }
+.center { display:flex; align-items:center; justify-content:center; }
+.muted { opacity: 0.85; color: rgba(255,255,255,0.85); font-size: 0.95rem; }
+
+/* ================= ANIMATIONS ================= */
+@keyframes random-pulse { 0%,100%{opacity:1}50%{opacity:0.85} }
+.pulse { animation: random-pulse 1.5s infinite; }
+
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-    #div_planning {
-        margin: 1rem;
-        border-radius: 8px;
-    }
-
-    .menu {
-        padding: 1rem;
-    }
-
-    .menu h1 {
-        font-size: 1.2rem;
-    }
-
-    .menu-buttons {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    #planning {
-        font-size: 0.8rem;
-    }
-
-    #planning th,
-    #planning td {
-        padding: 0.6rem;
-    }
+    #div_planning { margin: 1rem; border-radius: 8px; }
+    .menu { padding: 0.9rem 1rem; }
+    .menu h1 { font-size: 1.2rem; }
+    .menu-buttons { gap: 0.5rem; flex-wrap: wrap; }
+    #planning { font-size: 0.86rem; }
+    #planning thead th,
+    .tr_line td { padding: 0.5rem; }
+    .tr_line td:first-child { min-width: 60px; font-size: 0.78rem; }
+    .calendar-days { font-size: 0.72rem; gap: 0.2rem; }
 }
 
-/* ---------------- ANIMATIONS ---------------- */
-@keyframes random-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-}
-
-.pulse {
-    animation: random-pulse 1.5s infinite;
-}
-
-/* ---------------- SCROLLBAR ---------------- */
-#div_planning::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-}
-
-#div_planning::-webkit-scrollbar-track {
-    background: var(--random-bg-2);
-    border-radius: 4px;
-}
-
-#div_planning::-webkit-scrollbar-thumb {
-    background: var(--random-bg-5);
-    border-radius: 4px;
-}
-
-#div_planning::-webkit-scrollbar-thumb:hover {
-    background: var(--random-bg-4);
-}
+/* End of file */

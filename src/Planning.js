@@ -3,6 +3,7 @@ export class Plannings {
         
         this.list_rdv = [];
         this.popup_new_rdv = _popup_new_rd;
+        this.actualRdvCell = null;
     }
 
 
@@ -47,9 +48,14 @@ export class Plannings {
         }
     }*/
 
-    newRdv (cell) {
+    showModalRdv (cell) {
+        this.actualRdvCell = cell;
         this.popup_new_rdv.classList.remove("hidden");
         this.popup_new_rdv.classList.add('show');
+    }
+
+    addRdv (rdv) {
+        this.list_rdv.push(rdv);
     }
         
 }

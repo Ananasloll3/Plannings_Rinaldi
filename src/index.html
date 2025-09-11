@@ -72,13 +72,16 @@
         <h2>Prendre un rendez-vous</h2>
         <form id="form-rdv">
             <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom" required>
+            <input type="text" id="nom_rdv" name="nom" required>
     
             <label for="date">Date :</label>
-            <input type="date" id="date" name="date" required>
+            <input type="date" id="date_rdv" name="date" required>
     
-            <label for="heure">Heure :</label>
-            <input type="time" id="heure" name="heure" required>
+            <label for="heure">Heure de debut :</label>
+            <input type="time" id="heureDebut_rdv" name="heure" required>
+
+            <label for="heure">Heure de fin :</label>
+            <input type="time" id="heureFin_rdv" name="heure" required>
     
             <button type="submit" class="btn-menu">Valider</button>
         </form>
