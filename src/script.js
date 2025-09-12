@@ -1,4 +1,4 @@
-import { Plannings, RDV } from "./Planning.js";
+import { Plannings, RDV } from "./js/Planning.js";
 
 let table_planning = document.getElementById("planning");
 let clear_planning = document.getElementById("clear_planning");
@@ -10,8 +10,6 @@ let cancelBtnModal = document.getElementById('popup-close-id');
 let formModalRdv = document.getElementById('form-rdv');
 
 let nom_rdv = document.getElementById('nom_rdv');
-let date_rdv = document.getElementById('date_rdv');
-
 let heureDebut_rdv = document.getElementById('heureDebut_rdv');
 let heureFin_rdv = document.getElementById('heureFin_rdv');
 
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 // Cellules cliquables pour les jours
                 td.addEventListener('click', function() {
-                    planning.showModalRdv();
+                    planning.showModalRdv(this);
                 });
             }
             
@@ -68,7 +66,7 @@ formModalRdv.addEventListener("submit", (event) => {
 
     event.preventDefault();
     let titre = nom_rdv.value;
-    let date = new Date(date_rdv.value);
+    let date = new Date(planning.actualRdvCell.parentElement.id.split("_")[1] + ":00");
     let heureDebut = parseInt(heureDebut_rdv.value);
     let heureFin = parseInt(heureFin_rdv.value);
 

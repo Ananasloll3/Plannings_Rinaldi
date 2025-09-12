@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planning</title>
-    <link id="theme-css" rel="stylesheet" href="style.css">
+    <link id="theme-css" rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="pop_up.css">
 </head>
 <body>
@@ -18,12 +18,12 @@
 
                 <select id="choix-style">
                     <option disabled>Choisir un style</option>
-                    <option value="style.css">Style 1</option>
-                    <option value="style2.css">Style 2</option>
-                    <option value="style3.css">Style 3</option>
-                    <option value="style4.css">Style 4</option>
-                    <option value="style5.css">Style 5</option>
-                    <option value="style6.css">Style 6</option>
+                    <option value="./styles/style.css">Style 1</option>
+                    <option value="./styles/style2.css">Style 2</option>
+                    <option value="./styles/style3.css">Style 3</option>
+                    <option value="./styles/style4.css">Style 4</option>
+                    <option value="./styles/style5.css">Style 5</option>
+                    <option value="./styles/style6.css">Style 6</option>
                 </select>
             </div>
         </div>
@@ -74,9 +74,6 @@
             <label for="nom">Nom :</label>
             <input type="text" id="nom_rdv" name="nom" required>
     
-            <label for="date">Date :</label>
-            <input type="date" id="date_rdv" name="date" required>
-    
             <label for="heure">Heure de debut :</label>
             <input type="time" id="heureDebut_rdv" name="heure" required>
 
@@ -95,8 +92,8 @@
 
     <!-- JavaScript -->
     <script type="module" src="script.js"></script>
-    <script src="style_switch.js"></script>
-    <script src="planning_nav.js"></script>
-    <script src="calendar.js"></script>
+    <script src="./js/style_switch.js"></script>
+    <script src="./js/planning_nav.js"></script>
+    <script src="./js/calendar.js"></script>
 </body>
 </html>
