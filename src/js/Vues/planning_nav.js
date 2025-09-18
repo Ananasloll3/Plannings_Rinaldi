@@ -1,3 +1,8 @@
+import { GestionPlannings } from "../Controllers/gestionPlannings.js";
+
+setTimeout(() => {}, 500);
+
+
 const dateRangeEl = document.getElementById("date-range");
 const dayHeaders = Array.from(document.querySelectorAll("#planning thead th[id^='day-']"));
 
@@ -30,6 +35,8 @@ function updatePlanning(weekStart) {
 
     // Période affichée
     const weekEnd = new Date(weekStart);
+    GestionPlannings.planning.firstDateOfWeek = weekStart;
+    
     weekEnd.setDate(weekStart.getDate() + 6);
 
     const optionsRange = { day: "numeric", month: "long", year: "numeric" };

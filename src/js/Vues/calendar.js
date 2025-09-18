@@ -1,6 +1,7 @@
 const calendarEl = document.getElementById("calendar");
 const openCalendarBtn = document.getElementById("openCalendar");
 
+let today = new Date();
 let calendarMonth = today.getMonth();
 let calendarYear = today.getFullYear();
 
@@ -74,6 +75,7 @@ function renderCalendar(month, year) {
     }
 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
 
     for (let d = 1; d <= daysInMonth; d++) {
         const cell = document.createElement("div");
