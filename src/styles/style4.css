@@ -129,14 +129,27 @@ button:focus-visible {
 .planning-header {
     background: var(--discord-bg-hover);
     color: var(--discord-text);
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
-    font-size: 1.5rem;
+    position: relative;
+    z-index: 20;
+    overflow: visible;
+}
+
+.planning-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
     font-weight: 700;
-    border-bottom: 2px solid var(--discord-accent);
-    position: sticky;
-    top: 0;
-    z-index: 300; /* below global menu */
+}
+
+.planning-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--discord-accent), var(--discord-accent-hover));
 }
 
 /* small date / nav row under header */
@@ -145,15 +158,13 @@ button:focus-visible {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    padding: 0.5rem 1rem;
     position: relative;
-    z-index: 290;
-    flex-wrap: wrap;
 }
 #date-range {
-    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
     color: var(--discord-text);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* ===== TABLE / PLANNING ===== */
@@ -161,36 +172,35 @@ button:focus-visible {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
-    table-layout: fixed; /* important for equal columns and predictable widths */
-    background: transparent;
+    background: var(--discord-bg-light);
+    table-layout: fixed;
 }
 
 /* table header (sticky below planning header) */
 #planning thead {
     background: var(--discord-bg-hover);
     position: sticky;
-    top: 0; /* will be beneath the .planning-header because of z-index ordering */
-    z-index: 250;
+    top: 0;
+    z-index: 15;
 }
 #planning thead th {
-    padding: 0.8rem;
-    color: var(--discord-muted);
+    padding: 1rem 0.5rem;
+    color: var(--discord-text);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-right: 1px solid var(--discord-border);
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
 /* first column (row labels) */
 #planning thead th:first-child {
-    background: var(--discord-bg);
-    color: var(--discord-text);
     width: 80px;
+    background: var(--discord-bg);
 }
 
-/* distribute remaining columns evenly (fallback) */
+/* distribute remaining columns evenly */
 #planning thead th:not(:first-child) {
     width: calc((100% - 80px) / 7);
 }
@@ -200,39 +210,43 @@ button:focus-visible {
     transition: var(--transition);
     border-bottom: 1px solid var(--discord-border);
 }
-.tr_line:nth-child(even) {
-    background: rgba(255,255,255,0.02);
-}
 .tr_line:hover {
     background: var(--discord-bg-hover);
+}
+.tr_line:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
 }
 
 /* cells */
 .tr_line td {
-    padding: 0.7rem;
+    padding: 0.8rem 0.5rem;
     border-right: 1px solid var(--discord-border);
+    vertical-align: middle;
     text-align: center;
-    color: var(--discord-text);
     cursor: pointer;
     transition: var(--transition);
     position: relative;
-    min-height: 40px;
     width: calc((100% - 80px) / 7);
 }
 
 /* sticky first cell */
 .tr_line td:first-child {
     background: var(--discord-bg-hover);
+    color: var(--discord-text);
     font-weight: 600;
+    font-size: 0.85rem;
+    min-width: 80px;
     position: sticky;
     left: 0;
-    z-index: 320; /* above other cells but below header/menu */
-    box-shadow: 2px 0 6px rgba(0,0,0,0.35);
+    z-index: 10;
+    width: 80px;
 }
 
 /* hover state for content cells */
 .tr_line td:not(:first-child):hover {
-    background: rgba(88, 101, 242, 0.12);
+    background: rgba(88, 101, 242, 0.1);
+    transform: scale(1.02);
+    box-shadow: inset 0 0 10px rgba(88, 101, 242, 0.2);
 }
 
 /* ===== STATES ===== */
@@ -244,122 +258,10 @@ button:focus-visible {
 .available {
     background: var(--success);
     color: white;
-    font-weight: 600;
 }
 .pending {
     background: var(--warning);
-    color: black;
-    font-weight: 600;
-}
-
-/* ===== FORM ELEMENTS ===== */
-label,
-select,
-option,
-input,
-textarea,
-button {
-    background: rgba(255,255,255,0.03);
-    color: var(--discord-text);
-    border: 1px solid rgba(255,255,255,0.03);
-    padding: 0.45rem 0.9rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.95rem;
-    display: inline-block;
-    min-width: 80px;
-}
-input, textarea { width: 100%; box-sizing: border-box; }
-select:hover,
-option:hover,
-input:hover,
-textarea:hover,
-label:hover {
-    background: var(--discord-bg-hover);
-}
-select { appearance: none; -webkit-appearance: none; -moz-appearance: none; }
-select option { background: var(--discord-bg-light); color: var(--discord-text); }
-
-/* disabled forms */
-[disabled], :disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* ===== CALENDAR / POPPER ===== */
-.calendar-wrapper {
-    position: relative !important;
-    z-index: 1000 !important;
-}
-#calendar {
-    background: var(--discord-bg-light);
-    color: var(--discord-text);
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    width: 240px;
-    padding: 0.5rem;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 0.35rem;
-    border: 1px solid var(--discord-border);
-    z-index: 9999;
-}
-#calendar.hidden { display: none; }
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.4rem;
-    font-size: 0.9rem;
-}
-.calendar-header button {
-    background: var(--discord-accent);
-    border: none;
     color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-.calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.25rem;
-    text-align: center;
-    font-size: 0.78rem;
-}
-.calendar-days div {
-    padding: 0.35rem;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.calendar-days div:hover {
-    background: var(--discord-accent);
-    color: white;
-}
-.calendar-days .disabled {
-    color: rgba(255,255,255,0.25);
-    cursor: not-allowed;
-}
-.calendar-days .today {
-    background: var(--discord-accent-hover);
-    color: white;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-}
-
-/* ===== FOOTER ===== */
-footer {
-    text-align: center;
-    padding: 1.5rem;
-    background: var(--discord-bg-light);
-    color: var(--discord-muted);
-    margin-top: 2rem;
-    border-top: 2px solid var(--discord-accent);
-    border-radius: 0 0 calc(var(--border-radius) - 2px) calc(var(--border-radius) - 2px);
 }
 
 /* ===== SCROLLBAR ===== */
@@ -379,29 +281,160 @@ footer {
     background: var(--discord-accent-hover);
 }
 
-/* ===== UTILITIES & HELPERS ===== */
-.hidden { display: none !important; }
-.center { display:flex; align-items:center; justify-content:center; }
-.muted { color: var(--discord-muted); opacity: 0.9; font-size: 0.95rem; }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    #div_planning {
+        margin: 1rem;
+        border-radius: 8px;
+    }
+    .menu {
+        padding: 1rem;
+    }
+    .menu h1 {
+        font-size: 1.2rem;
+    }
+    .menu-buttons {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    #planning {
+        font-size: 0.8rem;
+    }
+    #planning thead th,
+    .tr_line td {
+        padding: 0.5rem 0.3rem;
+    }
+    .tr_line td:first-child {
+        min-width: 60px;
+        font-size: 0.75rem;
+    }
+    #planning thead {
+        top: 0;
+    }
+}
 
 /* ===== ANIMATIONS ===== */
 @keyframes royal-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.8; }
 }
-.pulse { animation: royal-pulse 1s infinite; }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    #div_planning { margin: 1rem; border-radius: 8px; }
-    .menu { padding: 0.75rem 1rem; }
-    .menu h1 { font-size: 1.15rem; }
-    .menu-buttons { gap: 0.4rem; flex-wrap: wrap; }
-    #planning { font-size: 0.82rem; }
-    #planning thead th,
-    .tr_line td { padding: 0.45rem; }
-    .tr_line td:first-child { min-width: 60px; font-size: 0.78rem; }
-    .calendar-days { font-size: 0.7rem; gap: 0.2rem; }
+.pulse {
+    animation: royal-pulse 1s infinite;
 }
 
-/* End of file */
+/* ===== FOOTER ===== */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: var(--discord-bg-light);
+    color: var(--discord-text);
+    margin-top: 2rem;
+    position: relative;
+}
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--discord-accent), var(--discord-accent-hover));
+}
+
+/* ===== FORM ELEMENTS ===== */
+label,
+select,
+option {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--discord-text);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    min-width: 80px;
+}
+select:hover,
+option:hover,
+label:hover {
+    background: var(--discord-accent);
+    color: white;
+    transform: translateY(-2px);
+}
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+select option {
+    background: var(--discord-bg-light);
+    color: var(--discord-text);
+}
+
+/* ===== CALENDAR FIX ===== */
+.calendar-wrapper {
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+#calendar {
+    background: var(--discord-bg-light);
+    color: var(--discord-text);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 220px;
+    padding: 0.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.4rem;
+    z-index: 9999;
+}
+#calendar.hidden {
+    display: none;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+.calendar-header button {
+    background: var(--discord-accent);
+    border: none;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.2rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+.calendar-days div {
+    padding: 0.3rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.calendar-days div:hover {
+    background: var(--discord-accent);
+    color: white;
+}
+.calendar-days .disabled {
+    color: var(--discord-muted);
+    cursor: not-allowed;
+}
+.calendar-days .today {
+    background: var(--discord-accent);
+    color: white;
+    font-weight: bold;
+}

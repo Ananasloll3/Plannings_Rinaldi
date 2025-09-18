@@ -104,9 +104,8 @@ body {
     color: white;
     padding: 1.5rem;
     text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    position: relative;
+    z-index: 20;
     overflow: visible;
 }
 
@@ -138,7 +137,7 @@ body {
     background: var(--royal-gradient);
     position: sticky;
     top: 0;
-    z-index: 5;
+    z-index: 15;
 }
 
 #planning thead th {
@@ -193,7 +192,7 @@ body {
     min-width: 80px;
     position: sticky;
     left: 0;
-    z-index: 5;
+    z-index: 10;
     width: 80px;
 }
 
@@ -262,6 +261,9 @@ body {
     .tr_line td:first-child {
         min-width: 60px;
         font-size: 0.75rem;
+    }
+    #planning thead {
+        top: 0;
     }
 }
 
