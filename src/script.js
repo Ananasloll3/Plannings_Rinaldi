@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 td.style.position = "relative";
                 // Cellules cliquables pour les jours
-                td.addEventListener('click', () => {                    
+                td.addEventListener('click', function() {                    
                     GestionPlannings.showModalRdv(this);
                 });
             }
@@ -63,6 +63,6 @@ cancelBtnModal.addEventListener("click", () => {
 
 formModalRdv.addEventListener("submit", (event) => {
 
-    event.preventDefault();
+    event.preventDefault();    
     GestionPlannings.newRdvFromForm();
 });

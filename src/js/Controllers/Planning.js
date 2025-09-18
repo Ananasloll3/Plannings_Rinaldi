@@ -1,4 +1,4 @@
-import { VisualRdvBase } from "../Vues/VisualRdvBase.js";
+import { VisualRdvBase } from "../Vues/VisualRdv_WC.js";
 
 export class Plannings {
     static instance;
@@ -49,21 +49,26 @@ export class Plannings {
     createVisualRdv (rdv, nextId) {
         let planningTable = document.getElementById("planning");
 
-        let visualRdv = new VisualRdvBase(nextId);
-        visualRdv.spanHeureDebut.textContent = String(rdv.heureDebut).padStart(2, '0') + ":00";
-        visualRdv.spanHeureFin.textContent = String(rdv.heureFin).padStart(2, '0') + ":00";
-        visualRdv.spanTitre.textContent = rdv.titre;
+        let visualRdv = document.createElement('visual-rdv-base');
+        console.log(visualRdv.children);
+        
+        visualRdv.id = 'visual-rdv-base-' + nextId;
+        //let visualRdv = new VisualRdvBase(nextId);
+
+        visualRdv.children[0].children[0].textContent = String(rdv.heureDebut).padStart(2, '0') + ":00";
+        visualRdv.children[0].children[1].textContent = String(rdv.heureFin).padStart(2, '0') + ":00";
+        visualRdv.children[0].children[2].textContent = rdv.titre;
 
         let top = rdv.startCell.style.top;
         let left = rdv.startCell.style.left;
 
-        visualRdv.div.style.position = "absolute";
-        visualRdv.div.style.zIndex = "9999";
-        visualRdv.div.style.top = top;
-        visualRdv.div.style.left = left;
-        visualRdv.div.style.height = (rdv.nombreCellules * rdv.startCell.style.height ) + "px";
+        visualRdv.style.position = "absolute";
+        visualRdv.style.zIndex = "9999";
+        visualRdv.style.top = top;
+        visualRdv.style.left = left;
+        visualRdv.style.height = (rdv.nombreCellules * rdv.startCell.style.height ) + "px";
 
-        planningTable.appendChild(visualRdv.div);
+        planningTable.appendChild(visualRdv);
     }
 
     cellIsFree (td) {
