@@ -1,4 +1,5 @@
-import { Plannings, RDV } from "./js/Planning.js";
+import { GestionPlannings } from "./js/Controllers/gestionPlannings.js";
+import { RDV } from "./js/Models/RDV.js";
 
 let table_planning = document.getElementById("planning");
 let clear_planning = document.getElementById("clear_planning");
@@ -8,15 +9,12 @@ let popup_rdv = document.getElementById("popup-rdv");
 
 let cancelBtnModal = document.getElementById('popup-close-id');
 let formModalRdv = document.getElementById('form-rdv');
-
-let nom_rdv = document.getElementById('nom_rdv');
-let heureDebut_rdv = document.getElementById('heureDebut_rdv');
-let heureFin_rdv = document.getElementById('heureFin_rdv');
-
-let planning = new Plannings(popup_rdv);
  
 let max_hours = 24;
 let day_week = 7;
+
+
+GestionPlannings.setPlanning(popup_rdv);
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -34,15 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 td.textContent = String(index).padStart(2, '0') + ":00";
                 td.style.cursor = "default";
             } else {
+                td.style.position = "relative";
                 // Cellules cliquables pour les jours
-                td.addEventListener('click', function() {
-                    planning.showModalRdv(this);
+                td.addEventListener('click', () => {                    
+                    GestionPlannings.showModalRdv(this);
                 });
             }
             
             tr.appendChild(td);
         }
-        table_planning.appendChild(tr);
+        table_planning.children[1].appendChild(tr);
 
     }
 });
@@ -65,14 +64,5 @@ cancelBtnModal.addEventListener("click", () => {
 formModalRdv.addEventListener("submit", (event) => {
 
     event.preventDefault();
-    let titre = nom_rdv.value;
-    let date = new Date(planning.actualRdvCell.parentElement.id.split("_")[1] + ":00");
-    let heureDebut = parseInt(heureDebut_rdv.value);
-    let heureFin = parseInt(heureFin_rdv.value);
-
-    planning.addRdv(new RDV(titre, date.getDay() - 1, heureDebut, date.getDay() - 1, heureFin));
-
-    popup_rdv.classList.remove('show');
-    popup_rdv.classList.add("hidden");
-    planning.update();
+    GestionPlannings.newRdvFromForm();
 });
