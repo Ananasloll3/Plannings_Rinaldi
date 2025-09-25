@@ -22,6 +22,7 @@ body {
     color: #2c3e50;
     line-height: 1.6;
     min-height: 100vh;
+    animation: tourne-carre 10s linear infinite;
 }
 
 /* ====== MENU ====== */
@@ -132,7 +133,6 @@ body {
     font-size: 0.9rem;
     background: white;
     table-layout: fixed;
-    position: relative;
 }
 
 #planning thead {
@@ -409,3 +409,15 @@ select option {
     color: white;
     font-weight: bold;
 }
+
+
+@keyframes tourne-carre {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  

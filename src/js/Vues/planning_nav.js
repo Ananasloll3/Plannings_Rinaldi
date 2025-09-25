@@ -1,4 +1,5 @@
 import { GestionPlannings } from "../Controllers/gestionPlannings.js";
+import { Plannings } from "../Controllers/Planning.js";
 
 setTimeout(() => {}, 500);
 
@@ -30,7 +31,8 @@ function updatePlanning(weekStart) {
         day.setDate(weekStart.getDate() + i);
 
         const options = { day: "numeric", month: "short" };
-        th.textContent = `${daysOfWeek[i]} ${day.toLocaleDateString("fr-FR", options)}`;
+
+        th.textContent = `${daysOfWeek[i]} ${day.toLocaleDateString("fr-FR", options)}`;        
     });
 
     // Période affichée
@@ -41,6 +43,7 @@ function updatePlanning(weekStart) {
 
     const optionsRange = { day: "numeric", month: "long", year: "numeric" };
     dateRangeEl.textContent = `${weekStart.toLocaleDateString("fr-FR", optionsRange)} - ${weekEnd.toLocaleDateString("fr-FR", optionsRange)}`;
+    GestionPlannings.planning.update();
 
     // Désactiver le bouton "←" si on est déjà à la semaine actuelle
     prevBtn.disabled = weekStart <= currentMonday;

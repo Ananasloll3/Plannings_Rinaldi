@@ -1,5 +1,6 @@
 import { GestionPlannings } from "./js/Controllers/gestionPlannings.js";
 import { RDV } from "./js/Models/RDV.js";
+import { VisualRdvBase } from "./js/Vues/VisualRdv_WC.js";
 
 let table_planning = document.getElementById("planning");
 let clear_planning = document.getElementById("clear_planning");
@@ -16,7 +17,12 @@ let day_week = 7;
 
 GestionPlannings.setPlanning(popup_rdv);
 
+document.addEventListener('load', async () => {
+    window.customElements.define('visual-rdv-base', VisualRdvBase);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
+
 
     for (let index = 0; index < max_hours; index++) {
         let tr = document.createElement("tr");

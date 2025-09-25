@@ -1,3 +1,4 @@
+
 const themeLink = document.getElementById("theme-css");
 const choixStyle = document.getElementById("choix-style");
 
@@ -14,3 +15,4 @@ choixStyle.addEventListener("change", (e) => {
   themeLink.setAttribute("href", newTheme);
   localStorage.setItem("theme", newTheme); // Sauvegarde
 });
+

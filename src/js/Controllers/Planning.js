@@ -1,4 +1,3 @@
-import { VisualRdvBase } from "../Vues/VisualRdv_WC.js";
 
 export class Plannings {
     static instance;
@@ -11,6 +10,7 @@ export class Plannings {
         this.actualRdvCell = null;
 
         this.firstDateOfWeek = null;
+        this.nombreUpdate = 0;
 
         if (Plannings.instance) return;
         
@@ -19,56 +19,83 @@ export class Plannings {
 
 
     update () {
-        let nextId = 0;
+        //let planning_table = document.getElementById("plannings");
+        console.log("[UPDATE " + this.nombreUpdate + "]");
+        this.nombreUpdate++;
+        
         for (let rdv of this.list_rdv) {
             console.log(rdv);
             
-            for (let index = 0; index < rdv.nombreCellules; index++) {                
+            if (rdv.weekRange === document.getElementById('date-range').textContent) {
+                rdv.visualRdv.classList.remove("RdvHidden");
+                rdv.visualRdv.classList.add("RdvVisible");
                 
-                let cell = document.getElementById("line" + (index + rdv.heureDebut) + "_cell_" + (rdv.idJourDebut));
-                
-                
-                cell.classList.add("occupied");
-                if (index === 0) {
-                    cell.textContent = rdv.titre;
-                    rdv.startCell = cell;
-                }
-
             }
-
-            console.log(rdv.startCell);            
-            this.createVisualRdv(rdv, nextId);
-            nextId++;
-
-            
+            else {
+                rdv.visualRdv.classList.remove("RdvVisible");
+                rdv.visualRdv.classList.add("RdvHidden");
+            }
             
         }
  
     }
 
     createVisualRdv (rdv, nextId) {
-        let planningTable = document.getElementById("planning");
 
+        let planning_table = document.getElementById("planning")
         let visualRdv = document.createElement('visual-rdv-base');
-        console.log(visualRdv.children);
         
         visualRdv.id = 'visual-rdv-base-' + nextId;
+        visualRdv.appendChild(this.addChildNode());
         //let visualRdv = new VisualRdvBase(nextId);
 
         visualRdv.children[0].children[0].textContent = String(rdv.heureDebut).padStart(2, '0') + ":00";
         visualRdv.children[0].children[1].textContent = String(rdv.heureFin).padStart(2, '0') + ":00";
-        visualRdv.children[0].children[2].textContent = rdv.titre;
+        visualRdv.children[0].children[2].textContent = rdv.titre;        
 
-        let top = rdv.startCell.style.top;
-        let left = rdv.startCell.style.left;
 
         visualRdv.style.position = "absolute";
-        visualRdv.style.zIndex = "9999";
-        visualRdv.style.top = top;
-        visualRdv.style.left = left;
-        visualRdv.style.height = (rdv.nombreCellules * rdv.startCell.style.height ) + "px";
+        visualRdv.style.zIndex = "999999";
+    
+        this.attachToCell(visualRdv, rdv.startCell);
 
-        planningTable.appendChild(visualRdv);
+        return visualRdv;
+    }
+
+    attachToCell(visualRdv, cell) 
+    {
+        const x = cell.offsetLeft;
+        const y = cell.offsetTop;
+        const w = cell.offsetWidth;
+        const h = cell.offsetHeight;        
+
+        visualRdv.x = x;
+        visualRdv.y = y;
+        visualRdv.width = w;
+        visualRdv.height = h;
+
+        // important : le tableau doit être positionné "relative"
+        const table = cell.closest("table");        
+
+        // si pas déjà dans le tableau, on l'ajoute dans le tbody
+        if (!visualRdv.parentNode) {            
+            table.querySelector("tbody").appendChild(visualRdv);
+        }
+    }
+
+
+    addChildNode(){
+        let _div = document.createElement('div');
+        
+        let spanHeureDebut = document.createElement('span');
+        let spanHeureFin = document.createElement('span');
+        let spanTitre = document.createElement('span');
+
+        _div.appendChild(spanHeureDebut);
+        _div.appendChild(spanTitre);
+        _div.appendChild(spanHeureFin);
+
+        return _div;
     }
 
     cellIsFree (td) {
