@@ -3,7 +3,7 @@ import { RdvState } from "../Controllers/Rdv_State.js";
 export class RDV {
     static lastRdvId = 0;
 
-    constructor(titre = `RDV${RDV.lastRdvId}`, jourDebut, heureDebut, jourFin, heureFin, weekRange, startCell = null) {
+    constructor(titre = `RDV${RDV.lastRdvId}`, jourDebut, heureDebut, minuteDebut, jourFin, heureFin, minuteFin, weekRange, startCell = null) {
         this.id = RDV.lastRdvId;
         RDV.lastRdvId++;
 
@@ -11,7 +11,9 @@ export class RDV {
         this.idJourDebut = jourDebut;
         this.idJjourFin = jourFin;
         this.heureDebut = heureDebut;
+        this.minuteDebut = minuteDebut;
         this.heureFin = heureFin;
+        this.minuteFin = minuteFin;
         this.weekRange = weekRange;
 
         this.startCell = startCell;        

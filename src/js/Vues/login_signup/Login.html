@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion</title>
+  <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+  <main class="card" role="main">
+    <header>
+      <h1>Se connecter</h1>
+      <p class="lead">Entrez vos identifiants pour accéder à votre compte.</p>
+    </header>
+
+    <form>
+      <fieldset>
+        <legend>Connexion</legend>
+
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="jean.dupont@example.com" required />
+        </div>
+
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input id="password" name="password" type="password" minlength="8" autocomplete="current-password" placeholder="Votre mot de passe" required />
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button id="btn_submit" type="submit">Se connecter</button>
+        <a id="link_signup" class="btn-secondary">Créer un compte</a>
+      </div>
+
+    </form>
+  </main>
+
+  <script type="module" src="Login.js"></script>
+</body>
+</html>

@@ -7,3 +7,106 @@
 .RdvHidden {
     visibility: hidden;
 }
+
+
+visual-rdv-base {
+    position: absolute; /* ne pas toucher */
+    z-index: 2;
+    display: block;
+
+    /* Fond élégant avec léger dégradé translucide */
+    background: linear-gradient(135deg, rgba(88, 101, 242, 0.18), rgba(88, 101, 242, 0.05));
+    border: 1px solid rgba(88, 101, 242, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    pointer-events: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+
+/* Conteneur interne */
+visual-rdv-base .container-visual-rdv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px 12px;
+    font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+    color: #1b1f3b;
+}
+
+/* Heure de début */
+visual-rdv-base .span-heure-debut {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4f5d75;
+    opacity: 0.85;
+}
+
+/* Titre du rendez-vous */
+visual-rdv-base .span-titre {
+    flex: 1;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #222b45;
+    background: rgba(88, 101, 242, 0.1);
+    border-radius: 8px;
+    padding: 6px 8px;
+    margin: 6px 0;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: inset 0 0 8px rgba(88, 101, 242, 0.1);
+}
+
+/* Heure de fin */
+visual-rdv-base .span-heure-fin {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4f5d75;
+    opacity: 0.85;
+    text-align: right;
+}
+
+/* Effet hover subtil */
+visual-rdv-base:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(88, 101, 242, 0.25), rgba(88, 101, 242, 0.1));
+}
+
+/* Animation d’apparition fluide */
+visual-rdv-base {
+    animation: fadeInRdv 0.4s ease-out;
+}
+
+@keyframes fadeInRdv {
+    from {
+        opacity: 0;
+        transform: translateY(4px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Thèmes de couleur (optionnel) */
+visual-rdv-base[type="reunion"] {
+    background: linear-gradient(135deg, rgba(0, 200, 100, 0.2), rgba(0, 200, 100, 0.05));
+    border-color: rgba(0, 200, 100, 0.4);
+}
+
+visual-rdv-base[type="appel"] {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.25), rgba(255, 193, 7, 0.1));
+    border-color: rgba(255, 193, 7, 0.4);
+}
+
+visual-rdv-base[type="perso"] {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.25), rgba(255, 107, 107, 0.1));
+    border-color: rgba(255, 107, 107, 0.4);
+}

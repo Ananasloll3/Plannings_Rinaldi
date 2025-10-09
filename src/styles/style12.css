@@ -1,0 +1,675 @@
+
+:root {
+    /* Palette Dark Matter BO3 - Violets cosmiques et noirs profonds */
+    --dark-matter-purple: #4a0080;
+    --cosmic-violet: #6a1b9a;
+    --deep-space: #1a0033;
+    --void-black: #0d001a;
+    --plasma-blue: #1e88e5;
+    --nebula-red: #c62828;
+    --space-smoke: #3d2352;
+    --antimatter-glow: #9c27b0;
+
+    /* Gradients Dark Matter authentiques */
+    --dark-matter-gradient: linear-gradient(135deg, #0d001a 0%, #4a0080 30%, #6a1b9a 60%, #1e88e5 100%);
+    --cosmic-gradient: linear-gradient(45deg, #1a0033 0%, #4a0080 25%, #9c27b0 50%, #6a1b9a 75%, #0d001a 100%);
+    --void-gradient: linear-gradient(135deg, #0d001a 0%, #3d2352 50%, #4a0080 100%);
+    --plasma-flow: linear-gradient(90deg, #4a0080, #1e88e5, #c62828, #6a1b9a, #4a0080);
+
+    /* Ombres cosmiques Dark Matter */
+    --shadow-dark-matter: 0 8px 32px rgba(74, 0, 128, 0.6);
+    --shadow-cosmic: 0 4px 20px rgba(156, 39, 176, 0.4);
+    --glow-antimatter: 0 0 25px rgba(106, 27, 154, 0.8);
+    --void-glow: 0 0 15px rgba(13, 0, 26, 0.9);
+
+    --border-radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at center, #1a0033 0%, #0d001a 50%, #000000 100%);
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Effet de particules cosmiques en arrière-plan */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236a1b9a' fill-opacity='0.08'%3E%3Ccircle cx='25' cy='25' r='2'/%3E%3Ccircle cx='75' cy='25' r='1'/%3E%3Ccircle cx='50' cy='50' r='1.5'/%3E%3Ccircle cx='25' cy='75' r='1'/%3E%3Ccircle cx='75' cy='75' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    z-index: -1;
+    animation: cosmic-drift 30s linear infinite;
+}
+
+@keyframes cosmic-drift {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    33% { transform: translateX(-20px) translateY(-30px) rotate(120deg); }
+    66% { transform: translateX(20px) translateY(-60px) rotate(240deg); }
+    100% { transform: translateX(0) translateY(-90px) rotate(360deg); }
+}
+
+/* ====== MENU ====== */
+.menu {
+    background: var(--dark-matter-gradient);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-dark-matter);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid var(--antimatter-glow);
+}
+
+/* Effet fumée Dark Matter animée */
+.menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239c27b0' fill-opacity='0.15'%3E%3Cpath d='M30 30c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15zm0-5c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    animation: dark-matter-flow 12s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes dark-matter-flow {
+    0%, 100% { 
+        transform: translateX(0) translateY(0) scale(1);
+        opacity: 0.3;
+    }
+    33% { 
+        transform: translateX(-15px) translateY(-10px) scale(1.1);
+        opacity: 0.6;
+    }
+    66% { 
+        transform: translateX(15px) translateY(-5px) scale(0.9);
+        opacity: 0.4;
+    }
+}
+
+.menu-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu h1 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 15px var(--antimatter-glow);
+    animation: dark-matter-pulse 4s ease-in-out infinite;
+}
+
+@keyframes dark-matter-pulse {
+    0%, 100% { 
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 15px var(--antimatter-glow);
+    }
+    50% { 
+        color: var(--cosmic-violet);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 25px var(--cosmic-violet), 0 0 35px var(--plasma-blue);
+    }
+}
+
+.menu-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-menu {
+    background: rgba(74, 0, 128, 0.3);
+    color: white;
+    border: 1px solid var(--cosmic-violet);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(15px);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(156, 39, 176, 0.4), transparent);
+    transition: left 0.8s;
+}
+
+.btn-menu:hover {
+    background: var(--void-gradient);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--glow-antimatter);
+    border-color: var(--antimatter-glow);
+    text-shadow: 0 0 12px rgba(156, 39, 176, 0.8);
+}
+
+.btn-menu:hover::before {
+    left: 100%;
+}
+
+.btn-menu:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: grayscale(50%);
+}
+
+/* ====== PLANNING ====== */
+#div_planning {
+    max-width: 1400px;
+    margin: 2rem auto;
+    background: rgba(13, 0, 26, 0.95);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark-matter);
+    border: 2px solid var(--space-smoke);
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: visible;
+    position: relative;
+    z-index: 1;
+}
+
+.planning-header {
+    background: var(--cosmic-gradient);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 20;
+    overflow: visible;
+}
+
+.planning-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 20px var(--antimatter-glow);
+    animation: header-antimatter 6s ease-in-out infinite;
+}
+
+@keyframes header-antimatter {
+    0%, 100% { 
+        color: white;
+        filter: brightness(1) drop-shadow(0 0 15px var(--cosmic-violet));
+    }
+    33% { 
+        color: var(--plasma-blue);
+        filter: brightness(1.2) drop-shadow(0 0 20px var(--plasma-blue));
+    }
+    66% { 
+        color: var(--antimatter-glow);
+        filter: brightness(1.4) drop-shadow(0 0 25px var(--antimatter-glow));
+    }
+}
+
+.planning-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--plasma-flow);
+    animation: plasma-current 8s linear infinite;
+}
+
+@keyframes plasma-current {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+#planning {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: rgba(13, 0, 26, 0.8);
+    table-layout: fixed;
+    position: relative;
+}
+
+#planning thead {
+    background: var(--void-gradient);
+    position: sticky;
+    top: 0;
+    z-index: 15;
+}
+
+#planning thead th {
+    padding: 1rem 0.5rem;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-right: 1px solid var(--space-smoke);
+    text-align: center;
+    font-size: 0.85rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8), 0 0 10px var(--cosmic-violet);
+    position: relative;
+}
+
+#planning thead th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--antimatter-glow);
+    animation: th-energy 3s ease-in-out infinite alternate;
+}
+
+@keyframes th-energy {
+    0% { opacity: 0.3; transform: scaleX(0.8); }
+    100% { opacity: 1; transform: scaleX(1); }
+}
+
+#planning thead th:first-child {
+    width: 80px;
+    background: var(--dark-matter-gradient);
+}
+
+#planning thead th:not(:first-child) {
+    width: calc((100% - 80px) / 7);
+}
+
+.tr_line {
+    transition: var(--transition);
+    border-bottom: 1px solid var(--space-smoke);
+    background: rgba(13, 0, 26, 0.3);
+}
+
+.tr_line:hover {
+    background: linear-gradient(90deg, rgba(74, 0, 128, 0.2), transparent);
+    box-shadow: inset 5px 0 15px rgba(156, 39, 176, 0.3);
+    transform: translateX(3px);
+}
+
+.tr_line:nth-child(even) {
+    background: rgba(26, 0, 51, 0.4);
+}
+
+.tr_line td {
+    padding: 0.8rem 0.5rem;
+    border-right: 1px solid var(--space-smoke);
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    width: calc((100% - 80px) / 7);
+    color: #ffffff;
+}
+
+.tr_line td:first-child {
+    background: var(--void-gradient);
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    min-width: 80px;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    width: 80px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.tr_line td:not(:first-child):hover {
+    background: var(--cosmic-gradient);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: inset 0 0 15px rgba(74, 0, 128, 0.6);
+    border-radius: 6px;
+    text-shadow: 0 0 12px rgba(156, 39, 176, 0.9);
+}
+
+/* États des cellules style Dark Matter */
+.occupied {
+    background: linear-gradient(135deg, var(--nebula-red), var(--void-black)) !important;
+    color: white;
+    font-weight: 600;
+    animation: occupied-dark-matter 3s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(198, 40, 40, 0.8);
+}
+
+.available {
+    background: linear-gradient(135deg, var(--plasma-blue), var(--cosmic-violet)) !important;
+    color: white;
+    font-weight: 600;
+    animation: available-plasma 4s ease-in-out infinite alternate;
+}
+
+.pending {
+    background: var(--dark-matter-gradient) !important;
+    color: white;
+    font-weight: 600;
+    animation: pending-antimatter 2.5s ease-in-out infinite;
+}
+
+@keyframes occupied-dark-matter {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.7);
+        filter: brightness(1);
+    }
+    50% { 
+        box-shadow: 0 0 0 12px rgba(198, 40, 40, 0);
+        filter: brightness(1.3);
+    }
+}
+
+@keyframes available-plasma {
+    0% { 
+        filter: brightness(1) saturate(1);
+        box-shadow: 0 0 10px rgba(30, 136, 229, 0.6);
+    }
+    100% { 
+        filter: brightness(1.4) saturate(1.3);
+        box-shadow: 0 0 20px rgba(30, 136, 229, 1);
+    }
+}
+
+@keyframes pending-antimatter {
+    0%, 100% { 
+        transform: scale(1);
+        filter: brightness(1) hue-rotate(0deg);
+    }
+    50% { 
+        transform: scale(1.03);
+        filter: brightness(1.2) hue-rotate(15deg);
+    }
+}
+
+/* ====== SCROLLBAR ====== */
+#div_planning::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+#div_planning::-webkit-scrollbar-track {
+    background: var(--void-black);
+    border-radius: 4px;
+}
+
+#div_planning::-webkit-scrollbar-thumb {
+    background: var(--dark-matter-gradient);
+    border-radius: 4px;
+    border: 1px solid var(--space-smoke);
+}
+
+#div_planning::-webkit-scrollbar-thumb:hover {
+    background: var(--cosmic-gradient);
+    box-shadow: var(--glow-antimatter);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    #div_planning {
+        margin: 1rem;
+        border-radius: 8px;
+    }
+
+    .menu {
+        padding: 1rem;
+    }
+
+    .menu h1 {
+        font-size: 1.2rem;
+    }
+
+    .menu-buttons {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    #planning {
+        font-size: 0.8rem;
+    }
+
+    #planning thead th,
+    .tr_line td {
+        padding: 0.5rem 0.3rem;
+    }
+
+    .tr_line td:first-child {
+        min-width: 60px;
+        font-size: 0.75rem;
+    }
+
+    #planning thead {
+        top: 0;
+    }
+}
+
+/* ====== ANIMATIONS ====== */
+@keyframes royal-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.pulse {
+    animation: royal-pulse 1s infinite;
+}
+
+/* ====== FOOTER ====== */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: var(--dark-matter-gradient);
+    color: white;
+    margin-top: 2rem;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--plasma-flow);
+    animation: plasma-current 8s linear infinite;
+}
+
+/* ====== PLANNING NAVIGATION ====== */
+.planning-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    background: rgba(74, 0, 128, 0.2);
+    padding: 1rem 0;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+#date-range {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 500;
+    text-shadow: 0 0 12px var(--antimatter-glow);
+    animation: date-antimatter 5s ease-in-out infinite alternate;
+}
+
+@keyframes date-antimatter {
+    0% { 
+        color: white;
+        text-shadow: 0 0 12px var(--antimatter-glow);
+    }
+    100% { 
+        color: var(--plasma-blue);
+        text-shadow: 0 0 18px var(--plasma-blue);
+    }
+}
+
+/* ====== FORM ELEMENTS ====== */
+label,
+select,
+option {
+    background: rgba(74, 0, 128, 0.3);
+    color: white;
+    border: 1px solid var(--cosmic-violet);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(15px);
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    min-width: 80px;
+    font-weight: 600;
+}
+
+select:hover,
+option:hover,
+label:hover {
+    background: var(--void-gradient);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--glow-antimatter);
+    border-color: var(--antimatter-glow);
+    text-shadow: 0 0 10px rgba(156, 39, 176, 0.8);
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select option {
+    background: var(--void-black);
+    color: white;
+    border: none;
+}
+
+/* ====== CALENDAR FIX ====== */
+.calendar-wrapper {
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+#calendar {
+    background: var(--void-black);
+    color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-dark-matter);
+    border: 2px solid var(--space-smoke);
+    width: 220px;
+    padding: 0.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.4rem;
+    z-index: 9999;
+    backdrop-filter: blur(15px);
+}
+
+#calendar.hidden {
+    display: none;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    background: var(--cosmic-gradient);
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: white;
+}
+
+.calendar-header button {
+    background: var(--dark-matter-gradient);
+    border: 1px solid var(--cosmic-violet);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.calendar-header button:hover {
+    background: var(--void-gradient);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(74, 0, 128, 0.8);
+    border-color: var(--antimatter-glow);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.2rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.calendar-days div {
+    padding: 0.3rem;
+    border-radius: 6px;
+    cursor: pointer;
+    background: rgba(74, 0, 128, 0.2);
+    transition: var(--transition);
+    border: 1px solid transparent;
+    color: #ffffff;
+}
+
+.calendar-days div:hover {
+    background: var(--cosmic-gradient);
+    color: white;
+    transform: scale(1.1);
+    border-color: var(--antimatter-glow);
+    box-shadow: 0 0 12px var(--cosmic-violet);
+}
+
+.calendar-days .disabled {
+    color: #666;
+    cursor: not-allowed;
+    background: rgba(13, 0, 26, 0.3);
+}
+
+.calendar-days .today {
+    background: var(--dark-matter-gradient);
+    color: white;
+    font-weight: bold;
+    animation: today-dark-matter 3s ease-in-out infinite alternate;
+    border: 1px solid var(--antimatter-glow);
+}
+
+@keyframes today-dark-matter {
+    0% { 
+        box-shadow: 0 0 8px var(--cosmic-violet);
+        filter: brightness(1);
+    }
+    100% { 
+        box-shadow: 0 0 20px var(--antimatter-glow);
+        filter: brightness(1.3);
+    }
+}

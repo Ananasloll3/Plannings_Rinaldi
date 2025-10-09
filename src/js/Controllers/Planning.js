@@ -1,3 +1,5 @@
+import { attachToCell } from "../Models/attachToCellPrecise.js";
+
 
 export class Plannings {
     static instance;
@@ -25,7 +27,7 @@ export class Plannings {
         
         for (let rdv of this.list_rdv) {
             console.log(rdv);
-            
+                        
             if (rdv.weekRange === document.getElementById('date-range').textContent) {
                 rdv.visualRdv.classList.remove("RdvHidden");
                 rdv.visualRdv.classList.add("RdvVisible");
@@ -42,61 +44,70 @@ export class Plannings {
 
     createVisualRdv (rdv, nextId) {
 
-        let planning_table = document.getElementById("planning")
         let visualRdv = document.createElement('visual-rdv-base');
         
         visualRdv.id = 'visual-rdv-base-' + nextId;
-        visualRdv.appendChild(this.addChildNode());
+        
         //let visualRdv = new VisualRdvBase(nextId);
+
+        this.addChildNode(visualRdv);
 
         visualRdv.children[0].children[0].textContent = String(rdv.heureDebut).padStart(2, '0') + ":00";
         visualRdv.children[0].children[1].textContent = String(rdv.heureFin).padStart(2, '0') + ":00";
         visualRdv.children[0].children[2].textContent = rdv.titre;        
-
-
-        visualRdv.style.position = "absolute";
-        visualRdv.style.zIndex = "999999";
     
-        this.attachToCell(visualRdv, rdv.startCell);
+        attachToCell(visualRdv, rdv.startCell, rdv);
 
         return visualRdv;
     }
 
-    attachToCell(visualRdv, cell) 
+
+    addChildNode(visualRdv){
+        visualRdv.container =  document.createElement('div');
+        visualRdv.spanHeureDebut = document.createElement('span');
+        visualRdv.spanHeureFin = document.createElement('span');
+        visualRdv.spanTitre = document.createElement('span');
+
+        visualRdv.container.classList.add("container-visual-rdv");
+        visualRdv.spanHeureDebut.classList.add("span-heure-debut");
+        visualRdv.spanHeureFin.classList.add("span-heure-fin");
+        visualRdv.spanTitre.classList.add("span-titre");
+
+        visualRdv.container.appendChild(visualRdv.spanHeureDebut);
+        visualRdv.container.appendChild(visualRdv.spanHeureFin);
+        visualRdv.container.appendChild(visualRdv.spanTitre);
+
+        visualRdv.appendChild(visualRdv.container)
+    }
+
+    /*
+    attachToCell(visualRdv, cell, rdv) 
     {
-        const x = cell.offsetLeft;
-        const y = cell.offsetTop;
-        const w = cell.offsetWidth;
-        const h = cell.offsetHeight;        
+        const rect = cell.getBoundingClientRect();
 
-        visualRdv.x = x;
-        visualRdv.y = y;
-        visualRdv.width = w;
-        visualRdv.height = h;
+        // offset du scroll total de la page
+        const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-        // important : le tableau doit être positionné "relative"
-        const table = cell.closest("table");        
+        // position absolue dans la page (indépendante du scroll)
+        const absoluteLeft = rect.left + scrollLeft;
+        const absoluteTop = rect.top + scrollTop;
 
-        // si pas déjà dans le tableau, on l'ajoute dans le tbody
-        if (!visualRdv.parentNode) {            
-            table.querySelector("tbody").appendChild(visualRdv);
+        // placer le composant en position absolue dans le body
+        visualRdv.style.left = `${absoluteLeft}px`;
+        visualRdv.style.top = `${absoluteTop - 101}px`; // -70 selon ton offset
+
+        // taille du composant
+        visualRdv.style.width = `${rect.width}px`;
+        visualRdv.style.height = `${rect.height * rdv.nombreCellules}px`;
+
+
+        let table_planning = document.getElementById("planning");
+        if (!visualRdv.parentNode) {
+            table_planning.appendChild(visualRdv);
         }
-    }
+    }*/
 
-
-    addChildNode(){
-        let _div = document.createElement('div');
-        
-        let spanHeureDebut = document.createElement('span');
-        let spanHeureFin = document.createElement('span');
-        let spanTitre = document.createElement('span');
-
-        _div.appendChild(spanHeureDebut);
-        _div.appendChild(spanTitre);
-        _div.appendChild(spanHeureFin);
-
-        return _div;
-    }
 
     cellIsFree (td) {
         return !td.classList.contains("occupied");

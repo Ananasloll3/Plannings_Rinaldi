@@ -1,7 +1,7 @@
 import { GestionPlannings } from "../Controllers/gestionPlannings.js";
 import { Plannings } from "../Controllers/Planning.js";
 
-setTimeout(() => {}, 500);
+setTimeout(() => {}, 500); // Attend quelque seconde le temps que le DOM s'initialise
 
 
 const dateRangeEl = document.getElementById("date-range");
