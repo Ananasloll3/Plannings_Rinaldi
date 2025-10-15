@@ -42,7 +42,14 @@ export class Plannings {
  
     }
 
-    createVisualRdv (rdv, nextId) {
+    updateWithAndHeightt () {
+
+        for (let rdv of this.list_rdv) {
+            attachToCell(rdv.visualRdv, rdv.startCell, rdv);
+        }
+    }
+
+    createVisualRdv (rdv, nextId, cell) {
 
         let visualRdv = document.createElement('visual-rdv-base');
         
@@ -52,11 +59,16 @@ export class Plannings {
 
         this.addChildNode(visualRdv);
 
-        visualRdv.children[0].children[0].textContent = String(rdv.heureDebut).padStart(2, '0') + ":00";
-        visualRdv.children[0].children[1].textContent = String(rdv.heureFin).padStart(2, '0') + ":00";
-        visualRdv.children[0].children[2].textContent = rdv.titre;        
+        visualRdv.children[0].children[0].textContent = String(rdv.heureDebut).padStart(2, '0') + ":" + rdv.minuteDebut.toString();
+        visualRdv.children[0].children[1].textContent = String(rdv.heureFin).padStart(2, '0') + ":" + rdv.minuteFin.toString();
+        visualRdv.children[0].children[2].textContent = rdv.titre;  
+        
+            // Génération de couleur unique pour chaque rendez-vous
+        const hue = (nextId * 137) % 360; // 137° = angle d'or pour couleurs distinctes
+        const color = `hsl(${hue}, 70%, 55%)`;
+        visualRdv.style.setProperty('--rdv-color', color);
     
-        attachToCell(visualRdv, rdv.startCell, rdv);
+        attachToCell(visualRdv, cell, rdv);
 
         return visualRdv;
     }
@@ -78,6 +90,18 @@ export class Plannings {
         visualRdv.container.appendChild(visualRdv.spanTitre);
 
         visualRdv.appendChild(visualRdv.container)
+    }
+
+    generateUniqueColor(index) {
+        // Utilise le nombre d'or pour espacer les teintes de façon optimale
+        const goldenRatio = 0.618033988749895;
+        const hue = (index * goldenRatio * 360) % 360;
+        
+        // Saturation et luminosité ajustées pour des couleurs vives et lisibles
+        const saturation = 65 + (index * 7) % 20; // Entre 65% et 85%
+        const lightness = 50 + (index * 5) % 15;  // Entre 50% et 65%
+        
+        return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     }
 
     /*

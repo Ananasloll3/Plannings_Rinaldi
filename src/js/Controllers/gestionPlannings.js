@@ -41,45 +41,57 @@ export class GestionPlannings extends Controllers {
 
 
     static newRdvFromForm () {
-        
         let nom_rdv = document.getElementById('nom_rdv');
         let heureDebut_rdv = document.getElementById('heureDebut_rdv');
         let heureFin_rdv = document.getElementById('heureFin_rdv');
 
         let titre = nom_rdv.value;
-        let actuelDay = parseInt(this.planning.actualRdvCell.id.split("_")[2]);
+        let actuelDay = parseInt(this.planning.actualRdvCell.id.split("cell_")[1]); // Correction ici
+        
         let date = new Date(this.planning.firstDateOfWeek);
         date.setDate(date.getDate() + actuelDay - 1);
-        
-        let heureDebut = parseInt(heureDebut_rdv.value);
-        let heureFin = parseInt(heureFin_rdv.value);
 
-        let minuteDebut = parseInt(heureDebut_rdv.value.split(":")[1]) || 0;
-        let minuteFin = parseInt(heureFin_rdv.value.split(":")[1]) || 0;
+        // Extraire les heures et minutes correctement
+        let minuteDebut = parseInt(heureDebut_rdv.value) || 0;        
+        let [heureFin, minuteFin] = heureFin_rdv.value.split(":").map(v => parseInt(v) || 0);
         
+        console.log(this.planning.actualRdvCell);
         
+        let heureDebut = parseInt(this.planning.actualRdvCell.parentNode.id.split("line_")[1]); // Correction ici
 
         let weekRange = document.getElementById('date-range').textContent;
 
-
-        let cell = document.getElementById("line" + (heureDebut) + "_cell_" + (actuelDay));
-        let rdv = new RDV(titre, date.getDay(), heureDebut, minuteDebut, date.getDay(), heureFin, minuteFin, weekRange, this.planning.actualRdvCell);
-
-        rdv.startCell = cell;
-        let visual = this.planning.createVisualRdv(rdv, this.nextIdVisualRdv);
+        let rdv = new RDV(
+            titre, 
+            date.getDay(), 
+            heureDebut, 
+            minuteDebut, 
+            date.getDay(), 
+            heureFin, 
+            minuteFin, 
+            weekRange, 
+            this.planning.actualRdvCell // Passer directement la cellule ici
+        );        
+        
+        console.log(this.planning.actualRdvCell);
+        
+        let visual = this.planning.createVisualRdv(rdv, this.nextIdVisualRdv, this.planning.actualRdvCell);
 
         rdv.visualRdv = visual;
         this.planning.addRdv(rdv);
-
 
         this.planning.actualRdvCell = null;
         this.planning.popup_new_rdv.classList.remove('show');
         this.planning.popup_new_rdv.classList.add("hidden");
 
-
         this.nextIdVisualRdv++;
         this.doUpdate();
+
+        nom_rdv.value = "";
+        heureDebut_rdv.value = "";
+        heureFin_rdv.value = "";
     }
+
     
 
     static createVisualPlannings (table_planning, max_hours = 24, day_week = 7) {
@@ -99,7 +111,12 @@ export class GestionPlannings extends Controllers {
                 } else {
                     td.style.position = "relative";
                     // Cellules cliquables pour les jours
-                    td.addEventListener('click', function() {                    
+                    td.addEventListener('click', function() {   
+                        let heure = parseInt(this.id.split("_cell_")[0].split("line")[1]);  
+
+                        document.getElementById("heureDebutPopUp").textContent = "Heure de debut : " + String(heure).padStart(2, '0') + ":00";     
+                        document.getElementById("heureFinPopUp").textContent = "Heure de fin : (à partir de " + String(heure).padStart(2, '0') + ":00)";   
+
                         GestionPlannings.showModalRdv(this);
                     });
                 }
@@ -132,5 +149,9 @@ export class GestionPlannings extends Controllers {
 
     static savePlanning () {
         this.planning.save();
+    }
+
+    static askUpdateWithAndHeightt () {
+        this.planning.updateWithAndHeightt();
     }
 }

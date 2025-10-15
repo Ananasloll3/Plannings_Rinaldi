@@ -1,3 +1,4 @@
+import { GestionPlannings } from "../Controllers/gestionPlannings.js";
 
 const themeLink = document.getElementById("theme-css");
 const choixStyle = document.getElementById("choix-style");
@@ -14,5 +15,7 @@ choixStyle.addEventListener("change", (e) => {
   const newTheme = e.target.value;
   themeLink.setAttribute("href", newTheme);
   localStorage.setItem("theme", newTheme); // Sauvegarde
+
+  GestionPlannings.askUpdateWithAndHeightt();
 });
 

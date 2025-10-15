@@ -10,39 +10,66 @@
 
 
 visual-rdv-base {
-    position: absolute; /* ne pas toucher */
+    position: absolute;
     z-index: 2;
     display: block;
 
-    /* Fond élégant avec léger dégradé translucide */
-    background: linear-gradient(135deg, rgba(88, 101, 242, 0.18), rgba(88, 101, 242, 0.05));
-    border: 1px solid rgba(88, 101, 242, 0.4);
+    /* Fond dynamique avec la couleur générée */
+    background: linear-gradient(135deg, var(--rdv-color, #3b82f6), color-mix(in srgb, var(--rdv-color, #3b82f6) 80%, black));
+    border: 1px solid color-mix(in srgb, var(--rdv-color, #3b82f6) 60%, white);
     border-radius: 12px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+
     backdrop-filter: blur(6px);
     overflow: hidden;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Effet de brillance animé */
+visual-rdv-base::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg);
+    animation: shine 3s ease-in-out infinite;
     pointer-events: none;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+
+@keyframes shine {
+    0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 /* Conteneur interne */
 visual-rdv-base .container-visual-rdv {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     padding: 10px 12px;
     font-family: "Inter", "Segoe UI", Roboto, sans-serif;
-    color: #1b1f3b;
 }
 
 /* Heure de début */
 visual-rdv-base .span-heure-debut {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #4f5d75;
     opacity: 0.85;
+    animation: slideInTop 0.4s ease-out;
 }
 
 /* Titre du rendez-vous */
@@ -51,8 +78,7 @@ visual-rdv-base .span-titre {
     text-align: center;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #222b45;
-    background: rgba(88, 101, 242, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     padding: 6px 8px;
     margin: 6px 0;
@@ -60,38 +86,79 @@ visual-rdv-base .span-titre {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    box-shadow: inset 0 0 8px rgba(88, 101, 242, 0.1);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    transition: background 0.3s ease;
+    animation: fadeIn 0.5s ease-out 0.1s both;
 }
 
 /* Heure de fin */
 visual-rdv-base .span-heure-fin {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #4f5d75;
     opacity: 0.85;
     text-align: right;
+    animation: slideInBottom 0.4s ease-out 0.15s both;
 }
 
-/* Effet hover subtil */
+/* Effet hover - SANS changement de taille ni position */
 visual-rdv-base:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, rgba(88, 101, 242, 0.25), rgba(88, 101, 242, 0.1));
+    box-shadow: 
+        0 10px 22px rgba(0, 0, 0, 0.2),
+        0 0 15px color-mix(in srgb, var(--rdv-color, #3b82f6) 30%, transparent);
+    border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Animation d’apparition fluide */
+visual-rdv-base:hover::before {
+    animation: shine 1.5s ease-in-out infinite;
+}
+
+visual-rdv-base:hover .span-titre {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Animation d'apparition fluide */
 visual-rdv-base {
-    animation: fadeInRdv 0.4s ease-out;
+    animation: fadeInRdv 0.5s ease-out;
 }
 
 @keyframes fadeInRdv {
     from {
         opacity: 0;
-        transform: translateY(4px) scale(0.98);
     }
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInTop {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 0.85;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 0.85;
+        transform: translateY(0);
     }
 }
 

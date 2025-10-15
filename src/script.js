@@ -53,3 +53,11 @@ formModalRdv.addEventListener("submit", (event) => {
     event.preventDefault();    
     GestionPlannings.newRdvFromForm();
 });
+
+
+
+window.addEventListener('resize', () => {
+    console.log("Rezize event detected");
+    
+    GestionPlannings.askUpdateWithAndHeightt();
+});
